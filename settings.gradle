@@ -1,0 +1,6 @@
+include ':utils'
+include ':adapter'
+include ':http'
+include ':core'
+include ':app'
+rootProject.name = "ChooonggFrame"
