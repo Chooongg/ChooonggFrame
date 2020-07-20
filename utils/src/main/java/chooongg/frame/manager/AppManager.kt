@@ -3,7 +3,7 @@ package chooongg.frame.manager
 import android.app.Application
 import chooongg.frame.throwable.ChooonggFrameException
 
-inline val app get() = AppManager.getApplication()
+inline val app get() = AppManager.getApplication().applicationContext
 
 object AppManager {
 
@@ -12,6 +12,7 @@ object AppManager {
     fun initialize(application: Application) {
         if (this.application != null) throw ChooonggFrameException("你已初始化Application！")
         this.application = application
+        application.resources
     }
 
     fun getApplication() =
