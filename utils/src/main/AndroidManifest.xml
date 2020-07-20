@@ -1,5 +1,3 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="chooongg.frame.utils">
+<manifest package="chooongg.frame.utils">
 
-    /
 </manifest>
