@@ -9,7 +9,7 @@ import android.os.Build
 import android.os.Process
 import android.util.Log
 import chooongg.frame.ChooonggFrame
-import chooongg.frame.manager.app
+import chooongg.frame.manager.APP
 import kotlin.system.exitProcess
 
 /**
@@ -21,9 +21,9 @@ object AppUtils {
      * 是否是Debug应用
      */
     @JvmOverloads
-    fun isAppDebug(packageName: String? = app.packageName): Boolean {
+    fun isAppDebug(packageName: String? = APP.packageName): Boolean {
         if (packageName.isSpace()) return false
-        val info = app.applicationInfo
+        val info = APP.applicationInfo
         return info != null && (info.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
     }
 
@@ -43,13 +43,13 @@ object AppUtils {
      * 重启应用
      */
     fun relaunchApp(isKillProcess: Boolean = false) {
-        val intent = launchApp(app.packageName)
+        val intent = launchApp(APP.packageName)
         if (intent == null) {
             Log.e(ChooonggFrame.TAG, "不存在的启动应用")
             return
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        app.startActivity(intent)
+        APP.startActivity(intent)
         if (!isKillProcess) return
         Process.killProcess(Process.myPid())
         exitProcess(0)
@@ -65,9 +65,9 @@ object AppUtils {
         val isSystem: Boolean
     )
 
-    fun getAppInfo(packageName: String = app.packageName): AppInfo? {
+    fun getAppInfo(packageName: String = APP.packageName): AppInfo? {
         return try {
-            val pm = app.packageManager ?: return null
+            val pm = APP.packageManager ?: return null
             val pi = pm.getPackageInfo(packageName, 0) ?: return null
             getBean(pm, pi)
         } catch (e: PackageManager.NameNotFoundException) {
@@ -76,10 +76,10 @@ object AppUtils {
         }
     }
 
-    fun getAppIcon(packageName: String = app.packageName): Drawable? {
+    fun getAppIcon(packageName: String = APP.packageName): Drawable? {
         if (packageName.isSpace()) return null
         return try {
-            val pm = app.packageManager
+            val pm = APP.packageManager
             val pi = pm.getPackageInfo(packageName, 0)
             pi?.applicationInfo?.loadIcon(pm)
         } catch (e: PackageManager.NameNotFoundException) {
@@ -88,10 +88,10 @@ object AppUtils {
         }
     }
 
-    fun getAppName(packageName: String = app.packageName): CharSequence? {
+    fun getAppName(packageName: String = APP.packageName): CharSequence? {
         if (packageName.isSpace()) return null
         return try {
-            val pm = app.packageManager
+            val pm = APP.packageManager
             val pi = pm.getPackageInfo(packageName, 0)
             pi?.applicationInfo?.loadLabel(pm)
         } catch (e: PackageManager.NameNotFoundException) {
@@ -100,10 +100,10 @@ object AppUtils {
         }
     }
 
-    fun getAppVersionName(packageName: String = app.packageName): CharSequence? {
+    fun getAppVersionName(packageName: String = APP.packageName): CharSequence? {
         if (packageName.isSpace()) return null
         return try {
-            val pm = app.packageManager
+            val pm = APP.packageManager
             val pi = pm.getPackageInfo(packageName, 0)
             pi?.applicationInfo?.loadLabel(pm)
         } catch (e: PackageManager.NameNotFoundException) {
@@ -113,10 +113,10 @@ object AppUtils {
     }
 
     @Suppress("DEPRECATION")
-    fun getAppVersionCode(packageName: String = app.packageName): Long? {
+    fun getAppVersionCode(packageName: String = APP.packageName): Long? {
         if (packageName.isSpace()) return null
         return try {
-            val pm = app.packageManager
+            val pm = APP.packageManager
             val pi = pm.getPackageInfo(packageName, 0)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 pi?.longVersionCode
@@ -129,21 +129,21 @@ object AppUtils {
         }
     }
 
-    fun getAppUid(packageName: String = app.packageName): Int? {
+    fun getAppUid(packageName: String = APP.packageName): Int? {
         return try {
-            app.packageManager.getApplicationInfo(packageName, 0).uid
+            APP.packageManager.getApplicationInfo(packageName, 0).uid
         } catch (e: Exception) {
             e.printStackTrace()
             null
         }
     }
 
-    fun getLauncherActivity(packageName: String? = app.packageName): String? {
+    fun getLauncherActivity(packageName: String? = APP.packageName): String? {
         if (packageName.isSpace()) return null
         val intent = Intent(Intent.ACTION_MAIN)
         intent.addCategory(Intent.CATEGORY_LAUNCHER)
         intent.`package` = packageName
-        val info = app.packageManager.queryIntentActivities(intent, 0)
+        val info = APP.packageManager.queryIntentActivities(intent, 0)
         if (info.size == 0) return null
         return info[0].activityInfo.name
     }
