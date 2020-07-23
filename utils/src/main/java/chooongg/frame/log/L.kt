@@ -14,6 +14,7 @@ import java.util.*
 object L {
 
     private var TAG = ChooonggFrame.TAG
+    private var enabled = true
     private var header: String? = ""
     private val handlers = LinkedList<BaseHandler>()
     private var firstHandler: BaseHandler
@@ -44,50 +45,36 @@ object L {
         firstHandler = handlers[0]
     }
 
-    @JvmStatic
     var logLevel = LogLevel.DEBUG // 日志的等级，可以进行配置，最好在 Application 中进行全局的配置
 
     /******************* L 的配置方法 Start *******************/
 
-    @JvmStatic
-    fun init(clazz: Class<*>): L {
-        TAG = clazz.simpleName
-        return this
-    }
+    fun init(clazz: Class<*>) = apply { TAG = clazz.simpleName }
 
     /**
      * 支持用户自己传 tag，可扩展性更好
      * @param tag
      */
-    @JvmStatic
-    fun init(tag: String): L {
-        TAG = tag
-        return this
-    }
+    fun init(tag: String) = apply { TAG = tag }
+
+    fun enabled(enable: Boolean) = apply { enabled = enable }
 
     /**
      * header 是 L 自定义的内容，可以放 App 的信息版本号等，方便查找和调试
      */
-    @JvmStatic
-    fun header(header: String?): L {
-        L.header = header
-        return this
-    }
+    fun header(header: String?) = apply { L.header = header }
 
     /**
      * 自定义 Handler 来解析 Object
+     * 插入在ObjectHandler之前
      */
-    @JvmStatic
-    fun addCustomerHandler(handler: BaseHandler): L {
-        val size = handlers.size
-        return addCustomerHandler(handler, size - 1) // 插入在ObjectHandler之前
-    }
+    fun addCustomerHandler(handler: BaseHandler) = addCustomerHandler(handler, handlers.size - 1)
+
 
     /**
      * 自定义 Handler 来解析 Object，并指定 Handler 的位置
      */
-    @JvmStatic
-    fun addCustomerHandler(handler: BaseHandler, index: Int): L {
+    fun addCustomerHandler(handler: BaseHandler, index: Int) = apply {
         handlers.add(index, handler)
         val len = handlers.size
         for (i in 0 until len) {
@@ -95,110 +82,76 @@ object L {
                 handlers[i - 1].setNextHandler(handlers[i])
             }
         }
-        return this
     }
 
     /**
      * 添加自定义的 Printer
      */
-    @JvmStatic
-    fun addPrinter(printer: Printer): L {
-        printers.add(printer)
-        return this
-    }
+    fun addPrinter(printer: Printer) = apply { printers.add(printer) }
 
     /**
      * 删除 Printer
      */
-    @JvmStatic
-    fun removePrinter(printer: Printer): L {
-        printers.remove(printer)
-        return this
-    }
+    fun removePrinter(printer: Printer) = apply { printers.remove(printer) }
 
     /**
      * 是否打印线程信息
      */
-    @JvmStatic
-    fun displayThreadInfo(displayThreadInfo: Boolean): L {
-        L.displayThreadInfo = displayThreadInfo
-        return this
+    fun displayThreadInfo(displayThreadInfo: Boolean) = apply {
+        this.displayThreadInfo = displayThreadInfo
     }
 
     /**
      * 是否打印类的信息
      */
-    @JvmStatic
-    fun displayClassInfo(displayClassInfo: Boolean): L {
-        L.displayClassInfo = displayClassInfo
-        return this
+    fun displayClassInfo(displayClassInfo: Boolean) = apply {
+        this.displayClassInfo = displayClassInfo
     }
 
     /**
      * 用于解析 json 的 Converter
      */
-    @JvmStatic
-    fun converter(converter: Converter): L {
-        L.converter = converter
-        return this
-    }
+    fun converter(converter: Converter) = apply { this.converter = converter }
 
     /******************* L 的配置方法 End *******************/
 
     /******************* L 提供打印的方法 Start *******************/
 
-    @JvmStatic
     fun e(msg: String?) = e(TAG, msg)
 
-    @JvmStatic
     fun e(tag: String?, msg: String?) = printLog(LogLevel.ERROR, tag, msg)
 
-    @JvmStatic
     fun e(msg: String?, tr: Throwable) = e(TAG, msg, tr)
 
-    @JvmStatic
     fun e(tag: String?, msg: String?, tr: Throwable) = printThrowable(LogLevel.ERROR, tag, msg, tr)
 
-    @JvmStatic
     fun w(msg: String?) = w(TAG, msg)
 
-    @JvmStatic
     fun w(tag: String?, msg: String?) = printLog(LogLevel.WARN, tag, msg)
 
-    @JvmStatic
     fun w(msg: String?, tr: Throwable) = w(TAG, msg, tr)
 
-    @JvmStatic
     fun w(tag: String?, msg: String?, tr: Throwable) = printThrowable(LogLevel.WARN, tag, msg, tr)
 
-    @JvmStatic
     fun i(msg: String?) = i(TAG, msg)
 
-    @JvmStatic
     fun i(tag: String?, msg: String?) = printLog(LogLevel.INFO, tag, msg)
 
-    @JvmStatic
     fun i(msg: String?, tr: Throwable) = i(TAG, msg, tr)
 
-    @JvmStatic
     fun i(tag: String?, msg: String?, tr: Throwable) = printThrowable(LogLevel.INFO, tag, msg, tr)
 
-    @JvmStatic
     fun d(msg: String?) = d(TAG, msg)
 
-    @JvmStatic
     fun d(tag: String?, msg: String?) = printLog(LogLevel.DEBUG, tag, msg)
 
-    @JvmStatic
     fun d(msg: String?, tr: Throwable) = d(TAG, msg, tr)
 
-    @JvmStatic
     fun d(tag: String?, msg: String?, tr: Throwable) = printThrowable(LogLevel.DEBUG, tag, msg, tr)
 
     /**
      * 使用特定的 printer 进行打印日志
      */
-    @JvmStatic
     fun print(logLevel: LogLevel, tag: String?, msg: String?, vararg printers: Printer) =
         printLog(logLevel, tag, msg, printers.toMutableSet())
 
@@ -208,15 +161,11 @@ object L {
         msg: String?,
         set: MutableSet<Printer> = printers
     ) {
-
+        if (!enabled) return
         if (logLevel.value <= L.logLevel.value) {
-
             if (tag != null && tag.isNotEmpty() && msg != null && msg.isNotEmpty()) {
-
                 set.map {
-
                     val s = getMethodNames(it.formatter)
-
                     if (msg.contains("\n")) {
                         it.printLog(
                             logLevel,
@@ -232,19 +181,13 @@ object L {
     }
 
     private fun printThrowable(logLevel: LogLevel, tag: String?, msg: String?, tr: Throwable) {
-
+        if (!enabled) return
         if (logLevel.value <= L.logLevel.value) {
-
             if (tag != null && tag.isNotEmpty() && msg != null && msg.isNotEmpty()) {
-
                 when (logLevel) {
-
                     LogLevel.ERROR -> Log.e(tag, msg, tr)
-
                     LogLevel.WARN -> Log.w(tag, msg, tr)
-
                     LogLevel.INFO -> Log.i(tag, msg, tr)
-
                     LogLevel.DEBUG -> Log.d(tag, msg, tr)
                 }
             }
@@ -254,49 +197,34 @@ object L {
     /**
      * 将任何对象转换成json字符串进行打印
      */
-    @JvmStatic
-    @JvmOverloads
     fun json(obj: Any?, jsonConfig: JSONConfig = JSONConfig(logLevel, TAG, printers)) {
-
         if (obj == null) {
             e("object is null")
             return
         }
-
         firstHandler.handleObject(obj, jsonConfig)
     }
 
     /******************* L 提供打印的方法 End *******************/
 
-    @JvmStatic
-    @JvmOverloads
     fun getMethodNames(formatter: Formatter = BorderFormatter): String {
-
         val sElements = Thread.currentThread().stackTrace
-
         var stackOffset = LoggerPrinter.getStackOffset(sElements)
-
         stackOffset++
-
         return StringBuilder().apply {
-
             append("  ").append(formatter.top())
         }.apply {
-
             header?.takeIf { it.isNotEmpty() }?.let {
                 // 添加 Header
                 append("Header: $it").append(formatter.middle()).append(formatter.spliter())
             }
-
         }.apply {
-
             if (displayThreadInfo) {
                 // 添加当前线程名
                 append("Thread: ${Thread.currentThread().name}")
                     .append(formatter.middle())
                     .append(formatter.spliter())
             }
-
             if (displayClassInfo) {
                 // 添加类名、方法名、行数
                 append(sElements[stackOffset].className)
@@ -311,15 +239,11 @@ object L {
                     .append(formatter.middle())
                     .append(formatter.spliter())
             }
-
             append("%s").append(formatter.bottom())
-
         }.toString()
     }
 
-    @JvmStatic
     fun printers() = printers
 
-    @JvmStatic
     fun getConverter() = converter
 }
