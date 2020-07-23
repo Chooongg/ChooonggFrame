@@ -2,12 +2,20 @@ package chooongg.frame.simple
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import chooongg.frame.log.L
+import androidx.lifecycle.ViewModel
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        L.e("测试打印")
+    }
+
+    class MainViewModel : ViewModel() {
+
+        init {
+        }
+
+        override fun onCleared() {
+        }
     }
 }

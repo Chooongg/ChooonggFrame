@@ -32,9 +32,6 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.3.0'
     api project(path: ':utils')
     api 'com.google.code.gson:gson:2.8.6'
     api 'com.squareup.retrofit2:retrofit:2.7.1'
