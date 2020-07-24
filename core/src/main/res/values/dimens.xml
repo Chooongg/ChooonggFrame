@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textOverline">12sp</dimen>
+    <dimen name="textBody2">14sp</dimen>
+    <dimen name="textBody1">16sp</dimen>
+    <dimen name="textSubtitle2">14sp</dimen>
+    <dimen name="textSubtitle1">16sp</dimen>
+    <dimen name="textHeadline6">20sp</dimen>
+    <dimen name="textHeadline5">24sp</dimen>
+    <dimen name="textHeadline4">34sp</dimen>
+    <dimen name="textHeadline3">48sp</dimen>
+    <dimen name="textHeadline2">60sp</dimen>
+    <dimen name="textHeadline1">96sp</dimen>
+</resources>

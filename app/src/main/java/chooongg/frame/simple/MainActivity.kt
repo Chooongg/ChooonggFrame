@@ -1,21 +1,18 @@
 package chooongg.frame.simple
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
+import chooongg.frame.core.activity.ChooonggActivity
+import chooongg.frame.core.annotation.ContentLayout
+import chooongg.frame.throwable.ChooonggFrameException
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+@ContentLayout(R.layout.activity_main)
+class MainActivity : ChooonggActivity() {
+
+    override fun initConfig(savedInstanceState: Bundle?) {
+        throw ChooonggFrameException("测试异常")
     }
 
-    class MainViewModel : ViewModel() {
-
-        init {
-        }
-
-        override fun onCleared() {
-        }
+    override fun initContent(savedInstanceState: Bundle?) {
+        throw ChooonggFrameException("测试异常")
     }
 }

@@ -1,5 +1,6 @@
 package chooongg.frame.http
 
+import android.app.Application
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -7,6 +8,10 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.net.URL
 
 object ChooonggHttp {
+
+    @JvmStatic
+    fun initialize(application: Application) {
+    }
 
     fun <T> getAPI(
         clazz: Class<T>,

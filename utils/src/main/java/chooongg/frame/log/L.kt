@@ -9,12 +9,13 @@ import chooongg.frame.log.formatter.Formatter
 import chooongg.frame.log.handler.*
 import chooongg.frame.log.printer.LogcatPrinter
 import chooongg.frame.log.printer.Printer
+import chooongg.frame.utils.BuildConfig
 import java.util.*
 
 object L {
 
     private var TAG = ChooonggFrame.TAG
-    private var enabled = true
+    private var enabled = BuildConfig.DEBUG
     private var header: String? = ""
     private val handlers = LinkedList<BaseHandler>()
     private var firstHandler: BaseHandler
@@ -117,48 +118,73 @@ object L {
 
     /******************* L 提供打印的方法 Start *******************/
 
-    fun e(msg: String?) = e(TAG, msg)
+    @JvmStatic
+    fun e(msg: CharSequence?) = e(TAG, msg)
 
-    fun e(tag: String?, msg: String?) = printLog(LogLevel.ERROR, tag, msg)
+    @JvmStatic
+    fun e(tag: CharSequence?, msg: CharSequence?) = printLog(LogLevel.ERROR, tag, msg)
 
-    fun e(msg: String?, tr: Throwable) = e(TAG, msg, tr)
+    @JvmStatic
+    fun e(msg: CharSequence?, tr: Throwable) = e(TAG, msg, tr)
 
-    fun e(tag: String?, msg: String?, tr: Throwable) = printThrowable(LogLevel.ERROR, tag, msg, tr)
+    @JvmStatic
+    fun e(tag: CharSequence?, msg: CharSequence?, tr: Throwable) =
+        printThrowable(LogLevel.ERROR, tag, msg, tr)
 
-    fun w(msg: String?) = w(TAG, msg)
+    @JvmStatic
+    fun w(msg: CharSequence?) = w(TAG, msg)
 
-    fun w(tag: String?, msg: String?) = printLog(LogLevel.WARN, tag, msg)
+    @JvmStatic
+    fun w(tag: CharSequence?, msg: CharSequence?) = printLog(LogLevel.WARN, tag, msg)
 
-    fun w(msg: String?, tr: Throwable) = w(TAG, msg, tr)
+    @JvmStatic
+    fun w(msg: CharSequence?, tr: Throwable) = w(TAG, msg, tr)
 
-    fun w(tag: String?, msg: String?, tr: Throwable) = printThrowable(LogLevel.WARN, tag, msg, tr)
+    @JvmStatic
+    fun w(tag: CharSequence?, msg: CharSequence?, tr: Throwable) =
+        printThrowable(LogLevel.WARN, tag, msg, tr)
 
-    fun i(msg: String?) = i(TAG, msg)
+    @JvmStatic
+    fun i(msg: CharSequence?) = i(TAG, msg)
 
-    fun i(tag: String?, msg: String?) = printLog(LogLevel.INFO, tag, msg)
+    @JvmStatic
+    fun i(tag: CharSequence?, msg: CharSequence?) = printLog(LogLevel.INFO, tag, msg)
 
-    fun i(msg: String?, tr: Throwable) = i(TAG, msg, tr)
+    @JvmStatic
+    fun i(msg: CharSequence?, tr: Throwable) = i(TAG, msg, tr)
 
-    fun i(tag: String?, msg: String?, tr: Throwable) = printThrowable(LogLevel.INFO, tag, msg, tr)
+    @JvmStatic
+    fun i(tag: CharSequence?, msg: CharSequence?, tr: Throwable) =
+        printThrowable(LogLevel.INFO, tag, msg, tr)
 
-    fun d(msg: String?) = d(TAG, msg)
+    @JvmStatic
+    fun d(msg: CharSequence?) = d(TAG, msg)
 
-    fun d(tag: String?, msg: String?) = printLog(LogLevel.DEBUG, tag, msg)
+    @JvmStatic
+    fun d(tag: CharSequence?, msg: CharSequence?) = printLog(LogLevel.DEBUG, tag, msg)
 
-    fun d(msg: String?, tr: Throwable) = d(TAG, msg, tr)
+    @JvmStatic
+    fun d(msg: CharSequence?, tr: Throwable) = d(TAG, msg, tr)
 
-    fun d(tag: String?, msg: String?, tr: Throwable) = printThrowable(LogLevel.DEBUG, tag, msg, tr)
+    @JvmStatic
+    fun d(tag: CharSequence?, msg: CharSequence?, tr: Throwable) =
+        printThrowable(LogLevel.DEBUG, tag, msg, tr)
 
     /**
      * 使用特定的 printer 进行打印日志
      */
-    fun print(logLevel: LogLevel, tag: String?, msg: String?, vararg printers: Printer) =
+    fun print(
+        logLevel: LogLevel,
+        tag: CharSequence?,
+        msg: CharSequence?,
+        vararg printers: Printer
+    ) =
         printLog(logLevel, tag, msg, printers.toMutableSet())
 
     private fun printLog(
         logLevel: LogLevel,
-        tag: String?,
-        msg: String?,
+        tag: CharSequence?,
+        msg: CharSequence?,
         set: MutableSet<Printer> = printers
     ) {
         if (!enabled) return
@@ -170,7 +196,10 @@ object L {
                         it.printLog(
                             logLevel,
                             tag,
-                            String.format(s, msg.replace("\n", "\n${it.formatter.spliter()}"))
+                            String.format(
+                                s,
+                                msg.replace(Regex("\n"), "\n${it.formatter.spliter()}")
+                            )
                         )
                     } else {
                         it.printLog(logLevel, tag, String.format(s, msg))
@@ -180,15 +209,20 @@ object L {
         }
     }
 
-    private fun printThrowable(logLevel: LogLevel, tag: String?, msg: String?, tr: Throwable) {
+    private fun printThrowable(
+        logLevel: LogLevel,
+        tag: CharSequence?,
+        msg: CharSequence?,
+        tr: Throwable
+    ) {
         if (!enabled) return
         if (logLevel.value <= L.logLevel.value) {
             if (tag != null && tag.isNotEmpty() && msg != null && msg.isNotEmpty()) {
                 when (logLevel) {
-                    LogLevel.ERROR -> Log.e(tag, msg, tr)
-                    LogLevel.WARN -> Log.w(tag, msg, tr)
-                    LogLevel.INFO -> Log.i(tag, msg, tr)
-                    LogLevel.DEBUG -> Log.d(tag, msg, tr)
+                    LogLevel.ERROR -> Log.e(tag.toString(), msg.toString(), tr)
+                    LogLevel.WARN -> Log.w(tag.toString(), msg.toString(), tr)
+                    LogLevel.INFO -> Log.i(tag.toString(), msg.toString(), tr)
+                    LogLevel.DEBUG -> Log.d(tag.toString(), msg.toString(), tr)
                 }
             }
         }

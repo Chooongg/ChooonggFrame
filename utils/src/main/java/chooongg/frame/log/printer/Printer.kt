@@ -8,5 +8,5 @@ import chooongg.frame.log.formatter.Formatter
  */
 interface Printer {
     val formatter: Formatter
-    fun printLog(logLevel: LogLevel, tag: String, message: String)
+    fun printLog(logLevel: LogLevel, tag: CharSequence, message: CharSequence)
 }

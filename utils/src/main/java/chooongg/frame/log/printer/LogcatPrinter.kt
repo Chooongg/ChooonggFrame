@@ -10,12 +10,12 @@ import chooongg.frame.log.formatter.Formatter
  */
 class LogcatPrinter(override val formatter: Formatter = BorderFormatter) : Printer {
 
-    override fun printLog(logLevel: LogLevel, tag: String, message: String) {
+    override fun printLog(logLevel: LogLevel, tag: CharSequence, message: CharSequence) {
         when (logLevel) {
-            LogLevel.ERROR -> Log.e(tag, message)
-            LogLevel.WARN -> Log.w(tag, message)
-            LogLevel.INFO -> Log.i(tag, message)
-            LogLevel.DEBUG -> Log.d(tag, message)
+            LogLevel.ERROR -> Log.e(tag.toString(), message.toString())
+            LogLevel.WARN -> Log.w(tag.toString(), message.toString())
+            LogLevel.INFO -> Log.i(tag.toString(), message.toString())
+            LogLevel.DEBUG -> Log.d(tag.toString(), message.toString())
         }
     }
 

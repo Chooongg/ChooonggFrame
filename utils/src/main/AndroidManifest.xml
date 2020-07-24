@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="chooongg.frame.utils">
 
+    <permission android:name="chooongg.frame.INITIALIZE" android:protectionLevel="dangerous"/>
+
 </manifest>
