@@ -25,6 +25,9 @@ interface Init {
      */
     fun initContent(savedInstanceState: Bundle?)
 
+    /**
+     * 获取布局资源
+     */
     fun getContentLayout(): Int {
         var layoutResId = R.layout.none
         if (initLayoutRes() != layoutResId) layoutResId = initLayoutRes()
@@ -35,6 +38,9 @@ interface Init {
         return layoutResId
     }
 
+    /**
+     * 获取背景资源
+     */
     fun getWindowBackgroundRes() = when {
         initWindowBackgroundRes() != null -> initWindowBackgroundRes()
         javaClass.isAnnotationPresent(WindowBackground::class.java) ->
