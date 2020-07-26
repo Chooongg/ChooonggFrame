@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--自动文字大小调整-->
+    <declare-styleable name="AutofitTextView">
+        <!-- 最小文字大小 -->
+        <attr name="autofit_minTextSize" format="dimension" />
+        <!-- 精度，精度越低耗时越高 -->
+        <attr name="autofit_precision" format="float" />
+        <!-- 是否自动调整 -->
+        <attr name="autofit_sizeToFit" format="boolean" />
+    </declare-styleable>
+</resources>

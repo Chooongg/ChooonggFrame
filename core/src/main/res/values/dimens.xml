@@ -11,4 +11,8 @@
     <dimen name="textHeadline3">48sp</dimen>
     <dimen name="textHeadline2">60sp</dimen>
     <dimen name="textHeadline1">96sp</dimen>
+
+    <dimen name="contentSmall">8dp</dimen>
+    <dimen name="contentMiddle">16dp</dimen>
+    <dimen name="contentBig">20dp</dimen>
 </resources>

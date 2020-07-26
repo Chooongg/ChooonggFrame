@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/actionBarSize">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/contentMiddle"
+        android:layout_marginEnd="@dimen/contentMiddle"
+        android:orientation="vertical">
+
+        <chooongg.frame.core.widget.autofit.AutofitTextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="TITLE"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/textHeadline6"
+            app:autofit_minTextSize="@dimen/textSubtitle1"
+            app:autofit_sizeToFit="true" />
+
+        <chooongg.frame.core.widget.autofit.AutofitTextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="SUBTITLE"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/textSubtitle2"
+            app:autofit_minTextSize="@dimen/textSubtitle1"
+            app:autofit_sizeToFit="true" />
+
+    </LinearLayout>
+
+</FrameLayout>
