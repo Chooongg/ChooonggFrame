@@ -1,6 +1,7 @@
 package chooongg.frame.http.log
 
 import android.text.TextUtils
+import chooongg.frame.ChooonggFrame
 import chooongg.frame.log.L
 import chooongg.frame.log.LogLevel
 import chooongg.frame.log.LoggerPrinter
@@ -190,7 +191,7 @@ class LoggingInterceptor private constructor(private val builder: Builder) : Int
         val headers = header.split(LoggerPrinter.BR).dropLastWhile { it.isEmpty() }.toTypedArray()
 
         return StringBuilder().apply {
-            if (headers != null && headers.isNotEmpty()) {
+            if (headers.isNotEmpty()) {
                 for (item in headers) {
                     append(" - ").append(item).append("\n")
                 }
@@ -202,7 +203,7 @@ class LoggingInterceptor private constructor(private val builder: Builder) : Int
 
     class Builder {
 
-        var TAG = "SAF_OKHttp"
+        var TAG = ChooonggFrame.TAG+"_HTTP"
 
         var isDebug: Boolean = false
         var requestFlag: Boolean = false

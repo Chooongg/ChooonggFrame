@@ -1,12 +1,18 @@
 package chooongg.frame.core.activity
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.Window
 import android.view.WindowManager
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import chooongg.frame.core.annotation.ShowToolBar
 import chooongg.frame.core.annotation.TranslucentStatusBar
 import chooongg.frame.core.interfaces.Init
+import chooongg.frame.core.manager.HideKeyboardManager
 import chooongg.frame.log.L
 
 abstract class ChooonggActivity : AppCompatActivity(), Init {
@@ -19,11 +25,18 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
         super.onCreate(savedInstanceState)
         configTranslucentStatusBar4Annotation()
         try {
+            configShowToolBar4Annotation()
+        } catch (e: Exception) {
+            L.e("${javaClass.simpleName} configToolBar operation there is an exception", e)
+        }
+        HideKeyboardManager.init(this)
+        try {
             setContentView(getContentLayout())
         } catch (e: Exception) {
             L.e("${javaClass.simpleName} setContentLayout operation there is an exception", e)
             return
         }
+
         try {
             initConfig(savedInstanceState)
             isCreated = true
@@ -44,6 +57,7 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun configTranslucentStatusBar4Annotation() {
         if (javaClass.isAnnotationPresent(TranslucentStatusBar::class.java) && supportActionBar == null) {
             val annotation = javaClass.getAnnotation(TranslucentStatusBar::class.java)!!
@@ -55,6 +69,28 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
                     window.statusBarColor = Color.TRANSPARENT
                 } else {
                     window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                }
+            }
+        }
+    }
+
+    @SuppressLint("InflateParams")
+    private fun configShowToolBar4Annotation() {
+        if (javaClass.isAnnotationPresent(ShowToolBar::class.java) && supportActionBar == null) {
+            val annotation = javaClass.getAnnotation(ShowToolBar::class.java)!!
+            if (annotation.isShow) {
+                val clazz = annotation.toolBarStyle
+                try {
+                    val constructor = clazz.java.getConstructor(Context::class.java)
+                    val toolBar = constructor.newInstance(this)
+                    val parentLayout =
+                        findViewById<View>(Window.ID_ANDROID_CONTENT).parent as LinearLayout
+                    parentLayout.addView(toolBar, 0)
+                } catch (e: Exception) {
+                    L.e(
+                        "${javaClass.simpleName} configShowToolBar4Annotation() there is an exception",
+                        e
+                    )
                 }
             }
         }

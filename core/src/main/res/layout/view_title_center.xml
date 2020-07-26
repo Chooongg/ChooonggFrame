@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/actionBarSize">
+    android:layout_height="48dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,26 +12,26 @@
         android:orientation="vertical">
 
         <chooongg.frame.core.widget.autofit.AutofitTextView
+            android:id="@+id/title_tv_title"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.5"
             android:gravity="center"
             android:singleLine="true"
             android:text="TITLE"
-            android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/textHeadline6"
             app:autofit_minTextSize="@dimen/textSubtitle1"
             app:autofit_sizeToFit="true" />
 
         <chooongg.frame.core.widget.autofit.AutofitTextView
+            android:id="@+id/title_tv_subtitle"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="SUBTITLE"
-            android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/textSubtitle2"
-            app:autofit_minTextSize="@dimen/textSubtitle1"
+            app:autofit_minTextSize="@dimen/textOverline"
             app:autofit_sizeToFit="true" />
 
     </LinearLayout>
