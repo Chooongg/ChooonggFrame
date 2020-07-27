@@ -1,6 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.Chooongg.Frame'
 
 android {
     compileSdkVersion 30
@@ -9,8 +12,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode version_code
+        versionName version_name
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -28,6 +31,10 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 

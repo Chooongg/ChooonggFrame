@@ -15,7 +15,9 @@ object ChooonggHttp {
     var logLevel = LogLevel.DEBUG
 
     @JvmStatic
+    @Suppress("unused")
     fun initialize(application: Application) {
+
     }
 
     fun <T> getAPI(

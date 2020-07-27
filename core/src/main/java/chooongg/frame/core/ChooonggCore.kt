@@ -9,6 +9,7 @@ object ChooonggCore {
     private var isInitialized = false
 
     @JvmStatic
+    @Suppress("unused")
     fun initialize(application: Application) {
         if (!isInitialized) {
             isInitialized = true

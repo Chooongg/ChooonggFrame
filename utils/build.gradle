@@ -1,6 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.Chooongg.Frame'
 
 android {
     compileSdkVersion 30
@@ -9,8 +12,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode version_code
+        versionName version_name
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -29,6 +32,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -36,3 +43,42 @@ dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     api 'androidx.core:core-ktx:1.3.1'
 }
+
+////gradlew bintrayUpload
+////下面到结尾都是需要添加的
+//ext {
+//    bintrayRepo = 'maven' // 对应Bintray网站中，创建Repository的命名
+//    bintrayName = 'ChooonggFrame-utils' // 对应Bintray网站中，创建的package的命名(會新建)
+//
+//    publishedGroupId = 'chooongg.frame' // 随意，对应之后引用工程的 第一段名称
+//    libraryName = 'utils'    // 最好是工程名
+//    artifact = 'utils'    // 最好是工程名，对应之后引用工程的 第二段名称
+//
+//    libraryDescription = 'Android frame development library based on kotlin' // 工程的描述
+//
+//    siteUrl = 'https://github.com/Chooongg/ChooonggFrame' // github项目地址
+//    gitUrl = 'https://github.com/Chooongg/ChooonggFrame.git' // github项目地址git
+//
+//    libraryVersion = android.defaultConfig.versionName // 随意，对应之后工程的 第三段名称
+//
+//    developerId = 'chooongg' // 用户名ID，对应创建bintray账号的名称ID
+//    developerName = 'chooongg' // 用户名ID，对应创建bintray账号的名称ID
+//    developerEmail = 'chooongg@outlook.com' // 邮箱，对应创建bintray账号的邮箱
+//
+//    licenseName = 'The Apache Software License, Version 2.0' // 固定
+//    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt' // 固定
+//    allLicenses = ["Apache-2.0"] // 固定
+//}
+//
+//apply from: '../install.gradle'
+//apply from: '../publish.gradle'
+//
+//javadoc { // 引用这个，是为了解决注释中，有中文，然后编译不通过的坑
+//    options {
+//        encoding "UTF-8"
+//        charSet 'UTF-8'
+//        //author true
+//        version true
+//        title 'Android quick development library based on kotlin'   // 文档标题
+//    }
+//}

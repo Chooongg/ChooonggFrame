@@ -1,6 +1,19 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.Chooongg.Frame'
+
+//publish {
+//    repoName = "ChooonggFrame"                                //仓库名 就是一开始设置的那个 让你设置maven了 你写maven即可
+//    userOrg = 'chooongg'                                      //bintray注册的用户名
+//    groupId = 'chooongg.frame'                                //compile引用时的第1部分groupId
+//    artifactId = 'core'                                       //compile引用时的第2部分项目名 需要自己在仓库下面创建！add new Package!
+//    publishVersion = android.defaultConfig.versionName        //compile引用时的第3部分版本号
+//    desc = 'This is a rxbus same of eventbus extend library ' //d项目描述
+//    website = 'https://github.com/Chooongg/ChooonggFrame'     //github 托管地址
+//}
 
 android {
     compileSdkVersion 30
@@ -9,8 +22,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode version_code
+        versionName version_name
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -28,6 +41,10 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 
