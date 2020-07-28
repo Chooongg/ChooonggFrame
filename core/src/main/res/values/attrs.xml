@@ -9,4 +9,5 @@
         <!-- 是否自动调整 -->
         <attr name="autofit_sizeToFit" format="boolean" />
     </declare-styleable>
+
 </resources>

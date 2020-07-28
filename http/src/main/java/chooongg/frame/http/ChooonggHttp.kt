@@ -28,7 +28,7 @@ object ChooonggHttp {
         return getRetrofit(baseUrl, config).create(clazz)
     }
 
-    fun getRetrofit(baseUrl: URL, config: (OkHttpClient.Builder.() -> Unit)?) =
+    fun getRetrofit(baseUrl: URL, config: (OkHttpClient.Builder.() -> Unit)? = null) =
         Retrofit.Builder().baseUrl(baseUrl)
             .client(getOkHttpClient(config))
             .addConverterFactory(GsonConverterFactory.create(GsonManager.gson))

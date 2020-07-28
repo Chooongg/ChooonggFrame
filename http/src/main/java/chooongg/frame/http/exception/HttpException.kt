@@ -1,9 +1,15 @@
 package chooongg.frame.http.exception
 
+import android.net.ParseException
+import android.util.MalformedJsonException
 import chooongg.frame.utils.NetworkUtils
+import com.google.gson.JsonParseException
+import com.google.gson.JsonSyntaxException
+import org.json.JSONException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
+import javax.net.ssl.SSLHandshakeException
 
 class HttpException : Throwable {
 
@@ -20,42 +26,79 @@ class HttpException : Throwable {
         }
     }
 
-    val type: Type
-    private val messageCopy: String?
+    var type: Type
+        private set(value) {
+            field = value
+            code = type.value.toString()
+            messageCopy = Converter.convert(type)
+        }
+    var code: String = ""
+        private set
+    private var messageCopy: String = ""
 
     constructor() : super() {
         this.type = Type.UN_KNOWN
-        this.messageCopy = null
     }
 
     constructor(type: Type) : super() {
         this.type = type
-        this.messageCopy = Converter.convert(type)
     }
 
-    constructor(message: String?) : super(message) {
+    constructor(code: Int) : super() {
+        var tempType = Type.UN_KNOWN
+        for (i in Type.values().indices) {
+            if (Type.values()[i].value == code) {
+                tempType = Type.values()[i]
+                break
+            }
+        }
+        this.type = tempType
+    }
+
+    constructor(code: String, message: String) : super(message) {
+        this.type = Type.CUSTOM
+        this.code = code
+        this.messageCopy = message
+    }
+
+    constructor(message: String) : super(message) {
         this.type = Type.CUSTOM
         this.messageCopy = message
     }
 
-    constructor(message: String?, cause: Throwable?) : super(message, cause) {
+    constructor(message: String, cause: Throwable) : super(message, cause) {
         this.type = Type.CUSTOM
         this.messageCopy = message
     }
 
-    constructor(cause: Throwable?) : super(cause?.toString(), cause) {
-        if (cause is HttpException) {
-            this.type = cause.type
-            this.messageCopy = cause.messageCopy
+    constructor(e: Throwable) : super(e.toString(), e) {
+        if (e is HttpException) {
+            this.type = e.type
         } else {
             this.type = when {
                 !NetworkUtils.isNetworkConnected() -> Type.NETWORK
-                cause is ConnectException -> Type.CONNECT
-                cause is UnknownHostException -> Type.UN_KNOWN_HOST
-                cause is SocketTimeoutException -> Type.TIMEOUT
+                e is ConnectException
+                        || e is UnknownHostException -> Type.CONNECT
+                e is SocketTimeoutException -> Type.TIMEOUT
+                e is retrofit2.HttpException -> {
+                    var tempType = Type.UN_KNOWN
+                    for (i in Type.values().indices) {
+                        if (Type.values()[i].value == e.code()) {
+                            tempType = Type.values()[i]
+                            break
+                        }
+                    }
+                    tempType
+                }
+                e is JsonParseException
+                        || e is JsonSyntaxException
+                        || e is JSONException
+                        || e is ParseException
+                        || e is NullPointerException
+                        || e is MalformedJsonException -> Type.PARSE
+                e is SSLHandshakeException -> Type.SSL
                 else -> Type.UN_KNOWN
             }
-            this.messageCopy = ""
         }
     }
 
@@ -67,7 +110,6 @@ class HttpException : Throwable {
         NETWORK(-3), TIMEOUT(-4),
         PARSE(-5),
         SSL(-6),
-        UN_KNOWN_HOST(-7),
         CONNECT(-8),
         HTTP400(400),
         HTTP401(401),

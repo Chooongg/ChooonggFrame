@@ -1,6 +1,7 @@
 package chooongg.frame.utils
 
 import android.content.Context
+import android.util.TypedValue
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.annotation.*
@@ -21,16 +22,15 @@ fun Context.resDrawable(@DrawableRes id: Int) = ContextCompat.getDrawable(this, 
 
 fun Context.resDimen(@DimenRes id: Int) = resources.getDimension(id)
 
-fun Context.resDimenOffset(@DimenRes resId: Int) = resources.getDimensionPixelOffset(resId)
+fun Context.resDimenOffset(@DimenRes id: Int) = resources.getDimensionPixelOffset(id)
 
-fun Context.resDimenSize(@DimenRes resId: Int) = resources.getDimensionPixelSize(resId)
+fun Context.resDimenSize(@DimenRes id: Int) = resources.getDimensionPixelSize(id)
 
-fun Context.resInt(@IntegerRes resId: Int) = resources.getInteger(resId)
+fun Context.resInt(@IntegerRes id: Int) = resources.getInteger(id)
 
-fun Context.resString(@StringRes resId: Int) = resources.getString(resId)
+fun Context.resString(@StringRes id: Int) = resources.getString(id)
 
-fun Context.resString(@StringRes resId: Int, vararg format: Any?) =
-    resources.getString(resId, *format)
+fun Context.resString(@StringRes id: Int, vararg format: Any?) = resources.getString(id, *format)
 
 
 fun View.resAnimation(@AnimRes id: Int) = AnimationUtils.loadAnimation(context, id)
@@ -43,16 +43,15 @@ fun View.resDrawable(@DrawableRes id: Int) = ContextCompat.getDrawable(context, 
 
 fun View.resDimen(@DimenRes id: Int) = resources.getDimension(id)
 
-fun View.resDimenOffset(@DimenRes resId: Int) = resources.getDimensionPixelOffset(resId)
+fun View.resDimenOffset(@DimenRes id: Int) = resources.getDimensionPixelOffset(id)
 
-fun View.resDimenSize(@DimenRes resId: Int) = resources.getDimensionPixelSize(resId)
+fun View.resDimenSize(@DimenRes id: Int) = resources.getDimensionPixelSize(id)
 
-fun View.resInt(@IntegerRes resId: Int) = resources.getInteger(resId)
+fun View.resInt(@IntegerRes id: Int) = resources.getInteger(id)
 
-fun View.resString(@StringRes resId: Int) = resources.getString(resId)
+fun View.resString(@StringRes id: Int) = resources.getString(id)
 
-fun View.resString(@StringRes resId: Int, vararg format: Any?) =
-    resources.getString(resId, *format)
+fun View.resString(@StringRes id: Int, vararg format: Any?) = resources.getString(id, *format)
 
 
 fun Fragment.resAnimation(@AnimRes id: Int) = AnimationUtils.loadAnimation(context, id)
@@ -66,13 +65,18 @@ fun Fragment.resDrawable(@DrawableRes id: Int) = ContextCompat.getDrawable(requi
 
 fun Fragment.resDimen(@DimenRes id: Int) = resources.getDimension(id)
 
-fun Fragment.resDimenOffset(@DimenRes resId: Int) = resources.getDimensionPixelOffset(resId)
+fun Fragment.resDimenOffset(@DimenRes id: Int) = resources.getDimensionPixelOffset(id)
 
-fun Fragment.resDimenSize(@DimenRes resId: Int) = resources.getDimensionPixelSize(resId)
+fun Fragment.resDimenSize(@DimenRes id: Int) = resources.getDimensionPixelSize(id)
 
-fun Fragment.resInt(@IntegerRes resId: Int) = resources.getInteger(resId)
+fun Fragment.resInt(@IntegerRes id: Int) = resources.getInteger(id)
 
-fun Fragment.resString(@StringRes resId: Int) = resources.getString(resId)
+fun Fragment.resString(@StringRes id: Int) = resources.getString(id)
 
-fun Fragment.resString(@StringRes resId: Int, vararg format: Any?) =
-    resources.getString(resId, *format)
+fun Fragment.resString(@StringRes id: Int, vararg format: Any?) = resources.getString(id, *format)
+
+fun Context.attrColor(@ColorRes id: Int): Int {
+    val typedValue = TypedValue()
+    theme.resolveAttribute(id, typedValue, true)
+    return typedValue.data
+}

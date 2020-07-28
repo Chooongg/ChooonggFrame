@@ -29,4 +29,7 @@
     <color name="colorBackground">#F9F9F9</color>
     <!--背景|上层元素-->
     <color name="colorOnBackground">#000000</color>
+
+    <!--分割线-->
+    <color name="colorDivider">#0F7F7F7F</color>
 </resources>
