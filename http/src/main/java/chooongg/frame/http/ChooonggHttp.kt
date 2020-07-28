@@ -40,11 +40,14 @@ object ChooonggHttp {
      */
     fun getOkHttpClient(config: (OkHttpClient.Builder.() -> Unit)?): OkHttpClient {
         val clientBuilder = OkHttpClient().newBuilder()
-        clientBuilder.addInterceptor(LoggingInterceptor.Builder()
-            .loggable(isEnableLog)
-            .request()
-            .response()
-            .build())
+        clientBuilder.addInterceptor(
+            LoggingInterceptor.Builder()
+                .loggable(isEnableLog)
+                .logLevel(logLevel)
+                .request()
+                .response()
+                .build()
+        )
         config?.invoke(clientBuilder)
         return clientBuilder.build()
     }
