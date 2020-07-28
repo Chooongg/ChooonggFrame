@@ -2,7 +2,12 @@ package chooongg.frame.http.request
 
 import chooongg.frame.http.exception.HttpException
 
-open class HttpCallback<RESPONSE> {
+open class HttpCallback<CALLBACK : HttpCallback<*, *>, RESPONSE>(block: CALLBACK.() -> Unit) {
+
+    init {
+        @Suppress("UNCHECKED_CAST")
+        block.invoke(this as CALLBACK)
+    }
 
     /**
      * 重写请从这里配置错误信息并进行分发
@@ -12,7 +17,7 @@ open class HttpCallback<RESPONSE> {
     }
 
     private var startBlock: (() -> Unit)? = null
-    private var responseBlock: ((RESPONSE?) -> Unit)? = null
+    private var responseBlock: (RESPONSE?.() -> Unit)? = null
     private var errorBlock: ((HttpException) -> Unit)? = null
     private var endBlock: (() -> Unit)? = null
 
@@ -20,7 +25,7 @@ open class HttpCallback<RESPONSE> {
         startBlock = block
     }
 
-    fun response(block: (RESPONSE?) -> Unit) {
+    fun response(block: RESPONSE?.() -> Unit) {
         responseBlock = block
     }
 

@@ -6,6 +6,7 @@ import chooongg.frame.core.activity.ChooonggActivity
 import chooongg.frame.core.annotation.ContentLayout
 import chooongg.frame.core.annotation.TranslucentStatusBar
 import chooongg.frame.http.TestAPI
+import chooongg.frame.http.request.HttpCallback
 import chooongg.frame.http.request.http
 
 @ContentLayout(R.layout.activity_main)
@@ -15,15 +16,20 @@ class MainActivity : ChooonggActivity() {
     override fun initConfig(savedInstanceState: Bundle?) {
         lifecycleScope.http<String> {
             api { TestAPI.service().test() }
-            request {
-                response {
+            request(RequestCallback {
 
-                }
-            }
+            })
         }
-        lifecycleScope.launchWhenCreated {  }
+        lifecycleScope.launchWhenCreated { }
     }
 
     override fun initContent(savedInstanceState: Bundle?) {
+    }
+
+    class RequestCallback<RESPONSE>(block: RequestCallback<RESPONSE>.() -> Unit) :
+        HttpCallback<RequestCallback<RESPONSE>, RESPONSE>(block) {
+
+
+
     }
 }
