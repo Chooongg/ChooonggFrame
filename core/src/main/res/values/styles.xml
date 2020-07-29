@@ -7,8 +7,10 @@
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="android:windowBackground">@color/colorBackground</item>
         <item name="actionBarSize">@dimen/d48</item>
-        <!--        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>-->
+        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
     </style>
 
+    <style name="ToolBar.Primary" parent="@style/Widget.MaterialComponents.Toolbar.Primary" />
+    <style name="ToolBar.Surface" parent="@style/Widget.MaterialComponents.Toolbar.Surface" />
 
 </resources>

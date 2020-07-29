@@ -16,4 +16,6 @@
     <!--%% 百分比类型-->
     <!--%n 换行符-->
 
+    <string name="titleBar_keepStatusBar">titleBar_keepStatusBar</string>
+
 </resources>

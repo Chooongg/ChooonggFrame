@@ -1,24 +1,34 @@
 package chooongg.frame.core.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.view.Window
 import android.view.WindowManager
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import chooongg.frame.core.annotation.ShowToolBar
+import chooongg.frame.core.R
+import chooongg.frame.core.annotation.ShowTitleBar
 import chooongg.frame.core.annotation.TranslucentStatusBar
 import chooongg.frame.core.interfaces.Init
 import chooongg.frame.core.manager.HideKeyboardManager
+import chooongg.frame.core.widget.titleBar.ChooonggToolBar
 import chooongg.frame.log.L
+import chooongg.frame.utils.contentView
+import chooongg.frame.utils.loadLabel
 
+@ShowTitleBar(true, true, ShowTitleBar.SURFACE)
 abstract class ChooonggActivity : AppCompatActivity(), Init {
 
     var isCreated = false
         private set
+
+    inline val context: Context get() = this
+
+    inline val activity: Activity get() = this
 
     @Deprecated("使用使用init方法初始化")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,16 +86,21 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
 
     @SuppressLint("InflateParams")
     private fun configShowToolBar4Annotation() {
-        if (javaClass.isAnnotationPresent(ShowToolBar::class.java) && supportActionBar == null) {
-            val annotation = javaClass.getAnnotation(ShowToolBar::class.java)!!
+        if (javaClass.isAnnotationPresent(ShowTitleBar::class.java) && supportActionBar == null) {
+            val annotation = javaClass.getAnnotation(ShowTitleBar::class.java)!!
             if (annotation.isShow) {
-                val clazz = annotation.toolBarStyle
                 try {
-                    val constructor = clazz.java.getConstructor(Context::class.java)
-                    val toolBar = constructor.newInstance(this)
-                    val parentLayout =
-                        findViewById<View>(Window.ID_ANDROID_CONTENT).parent as LinearLayout
+                    val layout = when (annotation.style) {
+                        ShowTitleBar.PRIMARY_SURFACE -> R.layout.chooongg_title_bar_primary_surface
+                        ShowTitleBar.SURFACE -> R.layout.chooongg_title_bar_surface
+                        else -> R.layout.chooongg_title_bar_primary
+                    }
+                    val toolBar =
+                        LayoutInflater.from(context).inflate(layout, null) as ChooonggToolBar
+                    toolBar.title = loadLabel()
+                    val parentLayout = contentView.parent as LinearLayout
                     parentLayout.addView(toolBar, 0)
+                    setSupportActionBar(toolBar)
                 } catch (e: Exception) {
                     L.e(
                         "${javaClass.simpleName} configShowToolBar4Annotation() there is an exception",

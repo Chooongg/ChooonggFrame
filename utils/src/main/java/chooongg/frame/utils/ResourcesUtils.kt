@@ -32,6 +32,12 @@ fun Context.resString(@StringRes id: Int) = resources.getString(id)
 
 fun Context.resString(@StringRes id: Int, vararg format: Any?) = resources.getString(id, *format)
 
+fun Context.resAttrColor(@ColorRes id: Int): Int {
+    val typedValue = TypedValue()
+    theme.resolveAttribute(id, typedValue, true)
+    return typedValue.data
+}
+
 
 fun View.resAnimation(@AnimRes id: Int) = AnimationUtils.loadAnimation(context, id)
 
@@ -53,6 +59,7 @@ fun View.resString(@StringRes id: Int) = resources.getString(id)
 
 fun View.resString(@StringRes id: Int, vararg format: Any?) = resources.getString(id, *format)
 
+fun View.resAttrColor(@ColorRes id: Int) = context.resAttrColor(id)
 
 fun Fragment.resAnimation(@AnimRes id: Int) = AnimationUtils.loadAnimation(context, id)
 
@@ -75,8 +82,4 @@ fun Fragment.resString(@StringRes id: Int) = resources.getString(id)
 
 fun Fragment.resString(@StringRes id: Int, vararg format: Any?) = resources.getString(id, *format)
 
-fun Context.attrColor(@ColorRes id: Int): Int {
-    val typedValue = TypedValue()
-    theme.resolveAttribute(id, typedValue, true)
-    return typedValue.data
-}
+fun Fragment.resAttrColor(@ColorRes id: Int) = requireContext().resAttrColor(id)
