@@ -11,16 +11,18 @@ import android.view.WindowManager
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import chooongg.frame.core.R
-import chooongg.frame.core.annotation.ShowTitleBar
+import chooongg.frame.core.annotation.TitleBar
+import chooongg.frame.core.annotation.TitleBarElevation
 import chooongg.frame.core.annotation.TranslucentStatusBar
 import chooongg.frame.core.interfaces.Init
 import chooongg.frame.core.manager.HideKeyboardManager
 import chooongg.frame.core.widget.titleBar.ChooonggToolBar
 import chooongg.frame.log.L
 import chooongg.frame.utils.contentView
-import chooongg.frame.utils.loadLabel
+import chooongg.frame.utils.dp2px
+import chooongg.frame.utils.resAttrDimenOffset
 
-@ShowTitleBar(true, true, ShowTitleBar.SURFACE)
+@TitleBar(true, true, TitleBar.SURFACE)
 abstract class ChooonggActivity : AppCompatActivity(), Init {
 
     var isCreated = false
@@ -30,12 +32,17 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
 
     inline val activity: Activity get() = this
 
+    var chooonggToolbar: ChooonggToolBar? = null
+
+    open fun configToolBar(toolBar: ChooonggToolBar) = Unit
+
     @Deprecated("使用使用init方法初始化")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         configTranslucentStatusBar4Annotation()
         try {
             configShowToolBar4Annotation()
+            if (chooonggToolbar != null) configToolBar(chooonggToolbar!!)
         } catch (e: Exception) {
             L.e("${javaClass.simpleName} configToolBar operation there is an exception", e)
         }
@@ -46,7 +53,6 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
             L.e("${javaClass.simpleName} setContentLayout operation there is an exception", e)
             return
         }
-
         try {
             initConfig(savedInstanceState)
             isCreated = true
@@ -86,21 +92,33 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
 
     @SuppressLint("InflateParams")
     private fun configShowToolBar4Annotation() {
-        if (javaClass.isAnnotationPresent(ShowTitleBar::class.java) && supportActionBar == null) {
-            val annotation = javaClass.getAnnotation(ShowTitleBar::class.java)!!
+        if (javaClass.isAnnotationPresent(TitleBar::class.java) && supportActionBar == null) {
+            val annotation = javaClass.getAnnotation(TitleBar::class.java)!!
             if (annotation.isShow) {
                 try {
                     val layout = when (annotation.style) {
-                        ShowTitleBar.PRIMARY_SURFACE -> R.layout.chooongg_title_bar_primary_surface
-                        ShowTitleBar.SURFACE -> R.layout.chooongg_title_bar_surface
+                        TitleBar.PRIMARY_SURFACE -> R.layout.chooongg_title_bar_primary_surface
+                        TitleBar.SURFACE -> R.layout.chooongg_title_bar_surface
                         else -> R.layout.chooongg_title_bar_primary
                     }
-                    val toolBar =
-                        LayoutInflater.from(context).inflate(layout, null) as ChooonggToolBar
-                    toolBar.title = loadLabel()
+                    val toolbar = LayoutInflater.from(context).inflate(layout, null)
+                            as ChooonggToolBar
+                    toolbar.setTitleStyle(annotation.isCenter)
+                    if ((javaClass.getAnnotation(TitleBarElevation::class.java)?.value
+                            ?: TitleBarElevation.ELEVATION) == TitleBarElevation.ELEVATION
+                    ) {
+                        toolbar.elevation = dp2px(4f).toFloat()
+                    }
                     val parentLayout = contentView.parent as LinearLayout
-                    parentLayout.addView(toolBar, 0)
-                    setSupportActionBar(toolBar)
+                    parentLayout.addView(
+                        toolbar, 0,
+                        LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            resAttrDimenOffset(R.attr.actionBarSize)
+                        )
+                    )
+                    setSupportActionBar(toolbar)
+                    chooonggToolbar = toolbar
                 } catch (e: Exception) {
                     L.e(
                         "${javaClass.simpleName} configShowToolBar4Annotation() there is an exception",
@@ -109,5 +127,10 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
                 }
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
     }
 }

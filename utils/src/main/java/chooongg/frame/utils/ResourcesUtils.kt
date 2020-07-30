@@ -32,10 +32,31 @@ fun Context.resString(@StringRes id: Int) = resources.getString(id)
 
 fun Context.resString(@StringRes id: Int, vararg format: Any?) = resources.getString(id, *format)
 
-fun Context.resAttrColor(@ColorRes id: Int): Int {
+fun Context.resAttrColor(@AttrRes id: Int): Int {
     val typedValue = TypedValue()
     theme.resolveAttribute(id, typedValue, true)
     return typedValue.data
+}
+
+fun Context.resAttrDimen(@AttrRes id: Int): Float {
+    val a = obtainStyledAttributes(intArrayOf(id))
+    val dimen = a.getDimension(0, 0f)
+    a.recycle()
+    return dimen
+}
+
+fun Context.resAttrDimenOffset(@AttrRes id: Int): Int {
+    val a = obtainStyledAttributes(intArrayOf(id))
+    val dimen = a.getDimensionPixelOffset(0, 0)
+    a.recycle()
+    return dimen
+}
+
+fun Context.resAttrDimenSize(@AttrRes id: Int): Int {
+    val a = obtainStyledAttributes(intArrayOf(id))
+    val dimen = a.getDimensionPixelSize(0, 0)
+    a.recycle()
+    return dimen
 }
 
 
@@ -59,7 +80,11 @@ fun View.resString(@StringRes id: Int) = resources.getString(id)
 
 fun View.resString(@StringRes id: Int, vararg format: Any?) = resources.getString(id, *format)
 
-fun View.resAttrColor(@ColorRes id: Int) = context.resAttrColor(id)
+fun View.resAttrColor(@AttrRes id: Int) = context.resAttrColor(id)
+
+fun View.resAttrDimenOffset(@AttrRes id: Int) = context.resAttrDimenOffset(id)
+
+fun View.resAttrDimenSize(@AttrRes id: Int) = context.resAttrDimenSize(id)
 
 fun Fragment.resAnimation(@AnimRes id: Int) = AnimationUtils.loadAnimation(context, id)
 
@@ -82,4 +107,8 @@ fun Fragment.resString(@StringRes id: Int) = resources.getString(id)
 
 fun Fragment.resString(@StringRes id: Int, vararg format: Any?) = resources.getString(id, *format)
 
-fun Fragment.resAttrColor(@ColorRes id: Int) = requireContext().resAttrColor(id)
+fun Fragment.resAttrColor(@AttrRes id: Int) = requireContext().resAttrColor(id)
+
+fun Fragment.resAttrDimenOffset(@AttrRes id: Int) = requireContext().resAttrDimenOffset(id)
+
+fun Fragment.resAttrDimenSize(@AttrRes id: Int) = requireContext().resAttrDimenSize(id)

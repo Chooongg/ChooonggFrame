@@ -1,8 +1,10 @@
 package chooongg.frame.core
 
 import android.app.Application
-import chooongg.frame.log.L
+import android.util.Log
+import chooongg.frame.ChooonggFrame
 import chooongg.frame.throwable.ChooonggFrameException
+import com.tencent.mmkv.MMKV
 
 object ChooonggCore {
 
@@ -13,7 +15,8 @@ object ChooonggCore {
     fun initialize(application: Application) {
         if (!isInitialized) {
             isInitialized = true
-            L.e("测试初始化Core")
-        } else throw ChooonggFrameException("ChooonggCore不可重复初始化")
+            MMKV.initialize(application)
+            Log.d(ChooonggFrame.TAG, "ChooonggCore Initialize Finish!")
+        } else throw ChooonggFrameException("ChooonggCore don't repeat initialize")
     }
 }

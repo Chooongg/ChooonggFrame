@@ -17,5 +17,7 @@
     <!--%n 换行符-->
 
     <string name="titleBar_keepStatusBar">titleBar_keepStatusBar</string>
+    <string name="none_layout">空布局</string>
+
 
 </resources>

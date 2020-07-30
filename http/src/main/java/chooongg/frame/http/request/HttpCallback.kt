@@ -2,12 +2,7 @@ package chooongg.frame.http.request
 
 import chooongg.frame.http.exception.HttpException
 
-open class HttpCallback<CALLBACK : HttpCallback<*, *>, RESPONSE>(block: CALLBACK.() -> Unit) {
-
-    init {
-        @Suppress("UNCHECKED_CAST")
-        block.invoke(this as CALLBACK)
-    }
+abstract class HttpCallback<RESPONSE>() {
 
     /**
      * 重写请从这里配置错误信息并进行分发

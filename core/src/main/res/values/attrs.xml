@@ -10,4 +10,22 @@
         <attr name="autofit_sizeToFit" format="boolean" />
     </declare-styleable>
 
+    <!--TitleBar-->
+    <declare-styleable name="AbsTitleBar">
+        <attr name="bar_title" format="string" />
+        <attr name="bar_subTitle" format="string" />
+        <attr name="bar_autoBack" format="boolean" />
+        <attr name="bar_autoColor" format="boolean" />
+        <attr name="bar_keepStatusBar" format="boolean" />
+        <attr name="bar_dividerStyle" format="enum">
+            <enum name="none" value="0" />
+            <enum name="line" value="1" />
+            <enum name="elevation" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="ChooonggToolBar">
+        <attr name="centerTitle" format="boolean" />
+    </declare-styleable>
+
 </resources>

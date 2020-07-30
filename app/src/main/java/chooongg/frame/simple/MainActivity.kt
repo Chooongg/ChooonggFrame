@@ -1,35 +1,41 @@
 package chooongg.frame.simple
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import chooongg.frame.core.activity.ChooonggActivity
 import chooongg.frame.core.annotation.ContentLayout
-import chooongg.frame.core.annotation.ShowTitleBar
+import chooongg.frame.core.annotation.TitleBar
 import chooongg.frame.http.TestAPI
 import chooongg.frame.http.request.HttpCallback
 import chooongg.frame.http.request.http
+import chooongg.frame.log.L
+import chooongg.frame.utils.doOnClick
+import kotlinx.android.synthetic.main.activity_main.*
 
 @ContentLayout(R.layout.activity_main)
-@ShowTitleBar(true, true, ShowTitleBar.SURFACE)
+@TitleBar(true, true, TitleBar.SURFACE)
 class MainActivity : ChooonggActivity() {
 
     override fun initConfig(savedInstanceState: Bundle?) {
+        chooonggToolbar?.setNavigationIcon(R.drawable.ic_arrow_back)
         lifecycleScope.http<String> {
             api { TestAPI.service().test() }
-            request(RequestCallback {
+            request(object : RequestCallback<String>() {
 
             })
         }
-        lifecycleScope.launchWhenCreated { }
     }
 
     override fun initContent(savedInstanceState: Bundle?) {
+        tv_test.doOnClick {
+            val intent = Intent(context, TwoActivity::class.java)
+            L.e(intent.toString())
+            startActivity(intent)
+        }
     }
 
-    class RequestCallback<RESPONSE>(block: RequestCallback<RESPONSE>.() -> Unit) :
-        HttpCallback<RequestCallback<RESPONSE>, RESPONSE>(block) {
-
-
+    abstract class RequestCallback<RESPONSE> : HttpCallback<RESPONSE>() {
 
     }
 }

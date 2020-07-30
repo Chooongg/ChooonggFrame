@@ -7,10 +7,12 @@
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="android:windowBackground">@color/colorBackground</item>
         <item name="actionBarSize">@dimen/d48</item>
-        <item name="toolbarStyle">@style/Widget.MaterialComponents.Toolbar.Primary</item>
+        <item name="toolbarNavigationButtonStyle">@style/Widget.Chooongg.Toolbar.Button.Navigation
+        </item>
     </style>
 
-    <style name="ToolBar.Primary" parent="@style/Widget.MaterialComponents.Toolbar.Primary" />
-    <style name="ToolBar.Surface" parent="@style/Widget.MaterialComponents.Toolbar.Surface" />
+    <style name="Widget.Chooongg.Toolbar.Button.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="minWidth">?attr/actionBarSize</item>
+    </style>
 
 </resources>

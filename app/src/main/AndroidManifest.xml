@@ -17,6 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".TwoActivity"
+            android:label="第二个页面" />
     </application>
 
 </manifest>

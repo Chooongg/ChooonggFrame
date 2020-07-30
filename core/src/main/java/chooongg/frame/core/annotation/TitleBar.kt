@@ -5,7 +5,7 @@ import java.lang.annotation.Inherited
 
 @Inherited
 @Target(AnnotationTarget.CLASS)
-annotation class ShowTitleBar(
+annotation class TitleBar(
     val isShow: Boolean = true,
     val isCenter: Boolean = false,
     @TitleStyle val style: Int = PRIMARY
