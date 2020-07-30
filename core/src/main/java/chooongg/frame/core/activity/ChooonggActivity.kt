@@ -53,6 +53,10 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
             L.e("${javaClass.simpleName} setContentLayout operation there is an exception", e)
             return
         }
+        getWindowBackgroundRes().apply {
+            if (this == null) window.setBackgroundDrawable(null)
+            else window.setBackgroundDrawableResource(this)
+        }
         try {
             initConfig(savedInstanceState)
             isCreated = true
