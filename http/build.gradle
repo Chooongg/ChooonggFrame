@@ -40,6 +40,7 @@ android {
 
 dependencies {
     api project(path: ':utils')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     api 'com.google.code.gson:gson:2.8.6'
     api 'com.squareup.retrofit2:retrofit:2.7.1'
     api 'com.squareup.retrofit2:converter-gson:2.7.1'
