@@ -58,6 +58,4 @@ dependencies {
     api 'androidx.constraintlayout:constraintlayout:2.0.0-rc1'
     api 'androidx.viewpager2:viewpager2:1.0.0'
     api 'com.airbnb.android:lottie:3.3.1'
-
-    api 'com.tencent:mmkv:1.0.22'
 }
