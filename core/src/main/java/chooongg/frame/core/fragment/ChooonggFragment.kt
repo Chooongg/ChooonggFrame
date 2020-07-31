@@ -19,6 +19,8 @@ abstract class ChooonggFragment : Fragment(), Init {
 
     }
 
+    inline val fragment get() = this
+
     private var contentView: View? = null
 
     private var isCreated = false
