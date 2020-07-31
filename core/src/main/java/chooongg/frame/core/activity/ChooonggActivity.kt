@@ -1,7 +1,6 @@
 package chooongg.frame.core.activity
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -30,7 +29,7 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
 
     inline val context: Context get() = this
 
-    inline val activity: Activity get() = this
+    inline val activity: AppCompatActivity get() = this
 
     var chooonggToolbar: ChooonggToolBar? = null
 
