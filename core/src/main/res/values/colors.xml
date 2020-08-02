@@ -8,11 +8,11 @@
     <!--主体|上层元素-->
     <color name="colorOnPrimary">#FFFFFF</color>
 
-    <!--强调-->
+    <!--次要-->
     <color name="colorSecondary">#03DAC6</color>
-    <!--强调|较浅/较深-->
+    <!--次要|较浅/较深-->
     <color name="colorSecondaryVariant">#018786</color>
-    <!--强调|上层元素-->
+    <!--次要|上层元素-->
     <color name="colorOnSecondary">#000000</color>
 
     <!--错误-->
@@ -29,6 +29,17 @@
     <color name="colorBackground">#F9F9F9</color>
     <!--背景|上层元素-->
     <color name="colorOnBackground">#000000</color>
+
+    <!--文本颜色-->
+    <color name="textPrimary">@color/colorPrimary</color>
+    <color name="textPrimaryVariant">@color/colorPrimaryVariant</color>
+    <color name="textSecondary">@color/colorSecondary</color>
+    <color name="textSecondaryVariant">@color/colorSecondaryVariant</color>
+    <color name="textVital">@color/colorOnSurface</color>
+    <color name="textNormal">#4A4A4A</color>
+    <color name="textAuxiliary">#A4A4A4</color>
+    <color name="textButton">@color/colorOnPrimary</color>
+    <color name="textGray">#999999</color>
 
     <!--分割线-->
     <color name="colorDivider">#0F7F7F7F</color>
