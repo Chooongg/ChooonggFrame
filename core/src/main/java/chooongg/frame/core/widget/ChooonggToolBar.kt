@@ -1,4 +1,4 @@
-package chooongg.frame.core.widget.titleBar
+package chooongg.frame.core.widget
 
 import android.content.Context
 import android.content.res.ColorStateList

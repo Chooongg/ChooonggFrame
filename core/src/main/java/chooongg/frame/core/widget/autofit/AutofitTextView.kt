@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.TypedValue
 import androidx.appcompat.widget.AppCompatTextView
+import com.google.android.material.textview.MaterialTextView
 
 /**
  * A [AppCompatTextView] that re-sizes its text to be no larger than the mWidth of the view.
@@ -16,7 +17,7 @@ class AutofitTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
-) : AppCompatTextView(context, attrs, defStyle),
+) : MaterialTextView(context, attrs, defStyle),
     AutofitHelper.OnTextSizeChangeListener {
 
     var autofitHelper: AutofitHelper? = null

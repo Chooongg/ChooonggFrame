@@ -15,7 +15,7 @@ import chooongg.frame.core.annotation.TitleBarElevation
 import chooongg.frame.core.annotation.TranslucentStatusBar
 import chooongg.frame.core.interfaces.Init
 import chooongg.frame.core.manager.HideKeyboardManager
-import chooongg.frame.core.widget.titleBar.ChooonggToolBar
+import chooongg.frame.core.widget.ChooonggToolBar
 import chooongg.frame.log.L
 import chooongg.frame.utils.contentView
 import chooongg.frame.utils.dp2px

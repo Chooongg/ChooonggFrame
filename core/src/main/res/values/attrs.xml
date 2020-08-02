@@ -10,22 +10,40 @@
         <attr name="autofit_sizeToFit" format="boolean" />
     </declare-styleable>
 
-    <!--TitleBar-->
-    <declare-styleable name="AbsTitleBar">
-        <attr name="bar_title" format="string" />
-        <attr name="bar_subTitle" format="string" />
-        <attr name="bar_autoBack" format="boolean" />
-        <attr name="bar_autoColor" format="boolean" />
-        <attr name="bar_keepStatusBar" format="boolean" />
-        <attr name="bar_dividerStyle" format="enum">
-            <enum name="none" value="0" />
-            <enum name="line" value="1" />
-            <enum name="elevation" value="2" />
-        </attr>
-    </declare-styleable>
-
     <declare-styleable name="ChooonggToolBar">
         <attr name="centerTitle" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="MaskEditText">
+        <attr format="string" name="met_mask"/>
+    </declare-styleable>
+
+    <declare-styleable name="RoundedImageView">
+        <attr name="cornerRadius" format="dimension" />
+        <attr name="cornerRadiusTopLeft" format="dimension" />
+        <attr name="cornerRadiusTopRight" format="dimension" />
+        <attr name="cornerRadiusBottomLeft" format="dimension" />
+        <attr name="cornerRadiusBottomRight" format="dimension" />
+        <attr name="borderWidth" format="dimension" />
+        <attr name="borderColor" format="color" />
+        <attr name="mutateBackground" format="boolean" />
+        <attr name="isOval" format="boolean" />
+        <attr name="android:scaleType" />
+        <attr name="tileMode">
+            <enum name="clamp" value="0" />
+            <enum name="repeat" value="1" />
+            <enum name="mirror" value="2" />
+        </attr>
+        <attr name="tileModeX">
+            <enum name="clamp" value="0" />
+            <enum name="repeat" value="1" />
+            <enum name="mirror" value="2" />
+        </attr>
+        <attr name="tileModeY">
+            <enum name="clamp" value="0" />
+            <enum name="repeat" value="1" />
+            <enum name="mirror" value="2" />
+        </attr>
     </declare-styleable>
 
 </resources>

@@ -3,13 +3,13 @@ package chooongg.frame.core.widget
 import android.content.Context
 import android.text.TextUtils
 import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatTextView
+import com.google.android.material.textview.MaterialTextView
 
 class MarqueeTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
-) : AppCompatTextView(context, attrs, defStyle) {
+) : MaterialTextView(context, attrs, defStyle) {
 
     init {
         ellipsize = TextUtils.TruncateAt.MARQUEE
