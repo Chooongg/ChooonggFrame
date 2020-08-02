@@ -4,18 +4,17 @@ import android.app.Application
 import android.util.Log
 import chooongg.frame.ChooonggFrame
 import chooongg.frame.throwable.ChooonggFrameException
-import com.tencent.mmkv.MMKV
 
+@Suppress("unused")
 object ChooonggCore {
 
     private var isInitialized = false
 
     @JvmStatic
-    @Suppress("unused")
+    @Suppress("unused", "UNUSED_PARAMETER")
     fun initialize(application: Application) {
         if (!isInitialized) {
             isInitialized = true
-            MMKV.initialize(application)
             Log.d(ChooonggFrame.TAG, "ChooonggCore Initialize Finish!")
         } else throw ChooonggFrameException("ChooonggCore don't repeat initialize")
     }
