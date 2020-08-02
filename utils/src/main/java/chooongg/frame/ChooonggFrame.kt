@@ -2,6 +2,7 @@ package chooongg.frame
 
 import android.app.Application
 import chooongg.frame.log.L
+import chooongg.frame.manager.ActivityTaskManager
 import chooongg.frame.manager.AppManager
 import com.tencent.mmkv.MMKV
 
@@ -11,6 +12,7 @@ object ChooonggFrame {
 
     fun initialize(application: Application) {
         AppManager.initialize(application)
+        application.registerActivityLifecycleCallbacks(ActivityTaskManager)
         MMKV.initialize(application)
         loadLibrary(application)
     }
