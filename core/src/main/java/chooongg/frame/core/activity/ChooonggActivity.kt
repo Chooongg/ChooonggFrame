@@ -142,9 +142,4 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
             }
         }
     }
-
-    override fun onSupportNavigateUp(): Boolean {
-        finish()
-        return super.onSupportNavigateUp()
-    }
 }
