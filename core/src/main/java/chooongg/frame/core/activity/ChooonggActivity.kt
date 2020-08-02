@@ -10,6 +10,7 @@ import android.view.WindowManager
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import chooongg.frame.core.R
+import chooongg.frame.core.annotation.AutoHideKeyboard
 import chooongg.frame.core.annotation.TitleBar
 import chooongg.frame.core.annotation.TitleBarElevation
 import chooongg.frame.core.annotation.TranslucentStatusBar
@@ -21,6 +22,7 @@ import chooongg.frame.utils.contentView
 import chooongg.frame.utils.dp2px
 import chooongg.frame.utils.resAttrDimenOffset
 
+@AutoHideKeyboard
 @TitleBar(true, true, TitleBar.SURFACE)
 abstract class ChooonggActivity : AppCompatActivity(), Init {
 
@@ -45,7 +47,7 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
         } catch (e: Exception) {
             L.e("${javaClass.simpleName} configToolBar operation there is an exception", e)
         }
-        HideKeyboardManager.init(this)
+        configAutoHideKeyboard()
         try {
             setContentView(getContentLayout())
         } catch (e: Exception) {
@@ -128,6 +130,15 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
                         e
                     )
                 }
+            }
+        }
+    }
+
+    private fun configAutoHideKeyboard() {
+        if (javaClass.isAnnotationPresent(AutoHideKeyboard::class.java)) {
+            val annotation = javaClass.getAnnotation(AutoHideKeyboard::class.java)!!
+            if (annotation.value) {
+                HideKeyboardManager.init(activity)
             }
         }
     }
