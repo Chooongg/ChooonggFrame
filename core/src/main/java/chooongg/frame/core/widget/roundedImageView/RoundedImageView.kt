@@ -42,8 +42,8 @@ class RoundedImageView : AppCompatImageView {
     private var mResource = 0
     private var mBackgroundResource = 0
     private var mScaleType: ScaleType? = null
-    private var mTileModeX: TileMode? = DEFAULT_TILE_MODE
-    private var mTileModeY: TileMode? = DEFAULT_TILE_MODE
+    private var mTileModeX: TileMode = DEFAULT_TILE_MODE
+    private var mTileModeY: TileMode = DEFAULT_TILE_MODE
 
     /**
      * Set the corner radii of all corners in px.
@@ -82,24 +82,20 @@ class RoundedImageView : AppCompatImageView {
             invalidate()
         }
 
-    var tileModeX: TileMode?
+    var tileModeX: TileMode
         get() = mTileModeX
         set(tileModeX) {
-            if (mTileModeX == tileModeX) {
-                return
-            }
+            if (mTileModeX == tileModeX) return
             mTileModeX = tileModeX
             updateDrawableAttrs()
             updateBackgroundDrawableAttrs(false)
             invalidate()
         }
 
-    var tileModeY: TileMode?
+    var tileModeY: TileMode
         get() = mTileModeY
         set(tileModeY) {
-            if (mTileModeY == tileModeY) {
-                return
-            }
+            if (mTileModeY == tileModeY) return
             mTileModeY = tileModeY
             updateDrawableAttrs()
             updateBackgroundDrawableAttrs(false)
@@ -341,8 +337,8 @@ class RoundedImageView : AppCompatImageView {
                 .setBorderWidth(borderWidth)
                 .setBorderColor(borderColors)
                 .setOval(mIsOval)
-                .setTileModeX(mTileModeX!!)
-                .setTileModeY(mTileModeY!!)
+                .setTileModeX(mTileModeX)
+                .setTileModeY(mTileModeY)
             if (mCornerRadii != null) {
                 drawable.setCornerRadius(
                     mCornerRadii[Corner.TOP_LEFT],
@@ -498,12 +494,12 @@ class RoundedImageView : AppCompatImageView {
             ScaleType.CENTER_INSIDE
         )
 
-        private fun parseTileMode(tileMode: Int): TileMode? {
+        private fun parseTileMode(tileMode: Int): TileMode {
             return when (tileMode) {
                 TILE_MODE_CLAMP -> TileMode.CLAMP
                 TILE_MODE_REPEAT -> TileMode.REPEAT
                 TILE_MODE_MIRROR -> TileMode.MIRROR
-                else -> null
+                else -> DEFAULT_TILE_MODE
             }
         }
     }
