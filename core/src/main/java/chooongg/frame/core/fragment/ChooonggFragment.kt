@@ -14,7 +14,7 @@ abstract class ChooonggFragment : Fragment(), Init {
 
     private var contentView: View? = null
 
-    private var isCreated = false
+    private var isCreated = false  
 
     var isFirstLoad = true
         private set
