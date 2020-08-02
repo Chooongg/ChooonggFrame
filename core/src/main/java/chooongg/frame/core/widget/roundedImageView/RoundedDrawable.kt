@@ -457,18 +457,18 @@ class RoundedDrawable(private val sourceBitmap: Bitmap) : Drawable() {
         return this
     }
 
-    fun setTileModeX(tileModeX: TileMode): RoundedDrawable {
+    fun setTileModeX(tileModeX: TileMode?): RoundedDrawable {
         if (this.tileModeX != tileModeX) {
-            this.tileModeX = tileModeX
+            this.tileModeX = tileModeX ?: TileMode.CLAMP
             mRebuildShader = true
             invalidateSelf()
         }
         return this
     }
 
-    fun setTileModeY(tileModeY: TileMode): RoundedDrawable {
+    fun setTileModeY(tileModeY: TileMode?): RoundedDrawable {
         if (this.tileModeY != tileModeY) {
-            this.tileModeY = tileModeY
+            this.tileModeY = tileModeY ?: TileMode.CLAMP
             mRebuildShader = true
             invalidateSelf()
         }
