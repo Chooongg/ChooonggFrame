@@ -67,18 +67,18 @@ abstract class ChooonggFragment : Fragment(), Init {
         }
     }
 
-    fun showTipLoading(message: CharSequence? = null, isClickable: Boolean = false) {
-        if (activity is ChooonggActivity) (activity as ChooonggActivity).showTipLoading(
+    fun showLoading(message: CharSequence? = null, isClickable: Boolean = false) {
+        if (activity is ChooonggActivity) (activity as ChooonggActivity).showLoading(
             message,
             isClickable
         )
     }
 
-    fun showTipLoading(resId: Int) {
-        if (activity is ChooonggActivity) (activity as ChooonggActivity).showTipLoading(resId)
+    fun showLoading(resId: Int) {
+        if (activity is ChooonggActivity) (activity as ChooonggActivity).showLoading(resId)
     }
 
-    fun hideTipLoading() {
-        if (activity is ChooonggActivity) (activity as ChooonggActivity).hideTipLoading()
+    fun hideLoading() {
+        if (activity is ChooonggActivity) (activity as ChooonggActivity).hideLoading()
     }
 }

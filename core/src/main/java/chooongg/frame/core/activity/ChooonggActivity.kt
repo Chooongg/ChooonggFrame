@@ -85,7 +85,7 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
 
     private var loadingTip: View? = null
 
-    fun showTipLoading(message: CharSequence? = null, isClickable: Boolean = false) {
+    fun showLoading(message: CharSequence? = null, isClickable: Boolean = false) {
         lifecycleScope.launch(Dispatchers.Main) {
             if (loadingTip != null) {
                 if (message.isNullOrEmpty()) {
@@ -112,11 +112,11 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
         }
     }
 
-    fun showTipLoading(@StringRes resId: Int) {
-        showTipLoading(getString(resId))
+    fun showLoading(@StringRes resId: Int) {
+        showLoading(getString(resId))
     }
 
-    fun hideTipLoading() {
+    fun hideLoading() {
         if (!isDestroyed) {
             lifecycleScope.launch(Dispatchers.Main) {
                 if (loadingTip == null) return@launch
