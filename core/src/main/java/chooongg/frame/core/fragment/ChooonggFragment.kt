@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import chooongg.frame.core.activity.ChooonggActivity
 import chooongg.frame.core.interfaces.Init
 import chooongg.frame.log.L
 
@@ -14,7 +15,7 @@ abstract class ChooonggFragment : Fragment(), Init {
 
     private var contentView: View? = null
 
-    private var isCreated = false  
+    private var isCreated = false
 
     var isFirstLoad = true
         private set
@@ -64,5 +65,20 @@ abstract class ChooonggFragment : Fragment(), Init {
             isFirstLoad = false
             lazyLoad()
         }
+    }
+
+    fun showTipLoading(message: CharSequence? = null, isClickable: Boolean = false) {
+        if (activity is ChooonggActivity) (activity as ChooonggActivity).showTipLoading(
+            message,
+            isClickable
+        )
+    }
+
+    fun showTipLoading(resId: Int) {
+        if (activity is ChooonggActivity) (activity as ChooonggActivity).showTipLoading(resId)
+    }
+
+    fun hideTipLoading() {
+        if (activity is ChooonggActivity) (activity as ChooonggActivity).hideTipLoading()
     }
 }

@@ -1,5 +1,6 @@
 package chooongg.frame.core.activity
 
+import android.animation.Animator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
@@ -7,8 +8,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import chooongg.frame.core.R
 import chooongg.frame.core.annotation.AutoHideKeyboard
 import chooongg.frame.core.annotation.TitleBar
@@ -18,9 +23,9 @@ import chooongg.frame.core.interfaces.Init
 import chooongg.frame.core.manager.HideKeyboardManager
 import chooongg.frame.core.widget.ChooonggToolBar
 import chooongg.frame.log.L
-import chooongg.frame.utils.contentView
-import chooongg.frame.utils.dp2px
-import chooongg.frame.utils.resAttrDimenOffset
+import chooongg.frame.utils.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AutoHideKeyboard
 @TitleBar(true, true, TitleBar.SURFACE)
@@ -75,6 +80,64 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
         } catch (e: Exception) {
             L.e("${javaClass.simpleName} initContent() there is an exception", e)
             return
+        }
+    }
+
+    private var loadingTip: View? = null
+
+    fun showTipLoading(message: CharSequence? = null, isClickable: Boolean = false) {
+        lifecycleScope.launch(Dispatchers.Main) {
+            if (loadingTip != null) {
+                if (message.isNullOrEmpty()) {
+                    loadingTip!!.findViewById<TextView>(R.id.tv_message).gone()
+                } else {
+                    loadingTip!!.findViewById<TextView>(R.id.tv_message).text = message
+                }
+                return@launch
+            }
+            loadingTip = layoutInflater.inflate(R.layout.view_loading, decorView)
+            loadingTip!!.alpha = 0f
+            loadingTip!!.layoutParams = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+            if (message.isNullOrEmpty()) {
+                loadingTip!!.findViewById<TextView>(R.id.tv_message).gone()
+            } else {
+                loadingTip!!.findViewById<TextView>(R.id.tv_message).text = message
+            }
+            if (!isClickable) loadingTip!!.setOnClickListener { }
+
+            loadingTip!!.animate().alpha(1f)
+        }
+    }
+
+    fun showTipLoading(@StringRes resId: Int) {
+        showTipLoading(getString(resId))
+    }
+
+    fun hideTipLoading() {
+        if (!isDestroyed) {
+            lifecycleScope.launch(Dispatchers.Main) {
+                if (loadingTip == null) return@launch
+                loadingTip!!.animate().alpha(0f).setListener(object : Animator.AnimatorListener {
+                    override fun onAnimationStart(animation: Animator?) {
+                    }
+
+                    override fun onAnimationRepeat(animation: Animator?) {
+                    }
+
+                    override fun onAnimationCancel(animation: Animator?) {
+                        decorView.removeView(loadingTip)
+                        loadingTip = null
+                    }
+
+                    override fun onAnimationEnd(animation: Animator?) {
+                        decorView.removeView(loadingTip)
+                        loadingTip = null
+                    }
+                })
+            }
         }
     }
 
