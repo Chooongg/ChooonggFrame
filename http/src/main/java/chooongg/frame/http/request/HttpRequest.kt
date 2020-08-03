@@ -28,9 +28,9 @@ fun <RESPONSE> LifecycleCoroutineScope.httpWhenResumed(block: suspend HttpReques
 
 class HttpRequest<RESPONSE>() {
 
-    private var api: (() -> Response<RESPONSE>)? = null
+    private var api: (suspend () -> Response<RESPONSE>)? = null
 
-    suspend fun api(block: () -> Response<RESPONSE>) {
+    fun api(block: suspend () -> Response<RESPONSE>) {
         api = block
     }
 

@@ -9,7 +9,8 @@ open class MMKVKey<T>(val key: String, val defaultValue: T) {
         (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<*>
 
     fun put(value: T?) = MMKVController.put(this, value)
-    fun get(defaultValue: T = this.defaultValue) = MMKVController.get(this, defaultValue)
+    val get get() = MMKVController.get(this, defaultValue)
+    fun get(defaultValue: T) = MMKVController.get(this, defaultValue)
     fun clear() = MMKVController.remove(this)
 }
 
@@ -18,7 +19,8 @@ open class MMKVKeyParcelable<T : Parcelable?>(val key: String, val defaultValue:
         (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<*>
 
     fun put(value: T?) = MMKVController.put(this, value)
-    fun get(defaultValue: T = this.defaultValue) = MMKVController.get(this, defaultValue)
+    val get get() = MMKVController.get(this, defaultValue)
+    fun get(defaultValue: T) = MMKVController.get(this, defaultValue)
     fun clear() = MMKVController.remove(this)
     fun update(callback: (T) -> T) = put(callback(get(defaultValue)))
 }
