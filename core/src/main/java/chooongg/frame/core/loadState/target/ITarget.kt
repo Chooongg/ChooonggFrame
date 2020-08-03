@@ -1,6 +1,6 @@
-package chooongg.base.loadState.target
+package chooongg.frame.core.loadState.target
 
-import chooongg.base.loadState.LoadLayout
+import chooongg.frame.core.loadState.LoadLayout
 import chooongg.frame.core.loadState.callback.Callback
 
 interface ITarget {

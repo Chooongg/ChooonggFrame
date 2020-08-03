@@ -1,4 +1,4 @@
-package chooongg.base.loadState
+package chooongg.frame.core.loadState
 
 import android.os.Handler
 import androidx.annotation.DrawableRes

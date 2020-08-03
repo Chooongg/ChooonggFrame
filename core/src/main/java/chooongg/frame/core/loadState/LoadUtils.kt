@@ -1,9 +1,9 @@
-package chooongg.base.loadState
+package chooongg.frame.core.loadState
 
 import chooongg.frame.core.loadState.callback.Callback
-import chooongg.base.loadState.target.ActivityTarget
-import chooongg.base.loadState.target.ITarget
-import chooongg.base.loadState.target.ViewTarget
+import chooongg.frame.core.loadState.target.ActivityTarget
+import chooongg.frame.core.loadState.target.ITarget
+import chooongg.frame.core.loadState.target.ViewTarget
 import kotlin.reflect.KClass
 
 class LoadUtils {

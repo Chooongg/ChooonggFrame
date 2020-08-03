@@ -1,8 +1,8 @@
-package chooongg.base.loadState.target
+package chooongg.frame.core.loadState.target
 
 import android.view.View
 import android.view.ViewGroup
-import chooongg.base.loadState.LoadLayout
+import chooongg.frame.core.loadState.LoadLayout
 import chooongg.frame.core.loadState.callback.Callback
 import chooongg.frame.core.loadState.callback.SuccessCallback
 

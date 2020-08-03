@@ -1,4 +1,4 @@
-package chooongg.base.loadState
+package chooongg.frame.core.loadState
 
 import chooongg.frame.core.loadState.callback.Callback
 import kotlin.reflect.KClass

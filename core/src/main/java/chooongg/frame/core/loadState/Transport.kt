@@ -1,4 +1,4 @@
-package chooongg.base.loadState
+package chooongg.frame.core.loadState
 
 import android.content.Context
 import android.view.View

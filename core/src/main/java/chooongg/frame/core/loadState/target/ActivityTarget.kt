@@ -1,11 +1,11 @@
-package chooongg.base.loadState.target
+package chooongg.frame.core.loadState.target
 
 import android.app.Activity
-import chooongg.base.loadState.LoadLayout
+import chooongg.frame.core.loadState.LoadLayout
 import chooongg.frame.core.loadState.callback.Callback
 import chooongg.frame.core.loadState.callback.SuccessCallback
-import chooongg.base.utils.contentView
-import chooongg.base.widget.titleBar.AbsTitleBar
+import chooongg.frame.core.widget.ChooonggToolBar
+import chooongg.frame.utils.contentView
 
 class ActivityTarget : ITarget {
 
@@ -19,7 +19,7 @@ class ActivityTarget : ITarget {
         val contentParent = activity.contentView
         var childIndex = 0
         for (i in 0 until contentParent.childCount) {
-            if (contentParent.getChildAt(i) !is AbsTitleBar) {
+            if (contentParent.getChildAt(i) !is ChooonggToolBar) {
                 childIndex = i
                 break
             }

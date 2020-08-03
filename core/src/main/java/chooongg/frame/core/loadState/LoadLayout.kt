@@ -1,11 +1,11 @@
-package chooongg.base.loadState
+package chooongg.frame.core.loadState
 
 import android.content.Context
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import chooongg.frame.core.loadState.callback.Callback
 import chooongg.frame.core.loadState.callback.SuccessCallback
-import chooongg.base.utils.isMainThread
+import chooongg.frame.utils.isMainThread
 import kotlin.reflect.KClass
 
 class LoadLayout @JvmOverloads constructor(
