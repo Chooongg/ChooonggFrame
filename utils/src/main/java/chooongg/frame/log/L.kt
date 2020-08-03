@@ -215,7 +215,7 @@ object L {
         msg: CharSequence?,
         tr: Throwable
     ) {
-        if (!enabled) return
+        if (enabled) return
         if (logLevel.value <= L.logLevel.value) {
             if (tag != null && tag.isNotEmpty() && msg != null && msg.isNotEmpty()) {
                 when (logLevel) {

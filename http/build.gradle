@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.dcendents.android-maven'
 
-group='com.github.Chooongg.Frame'
+group = 'com.github.Chooongg.Frame'
 
 android {
     compileSdkVersion 30
@@ -46,4 +46,5 @@ dependencies {
     api 'com.squareup.retrofit2:converter-gson:2.7.1'
     api 'com.squareup.retrofit2:converter-scalars:2.7.1'
     api 'com.squareup.okhttp3:okhttp:4.8.0'
+    api 'com.squareup.okhttp3:logging-interceptor:4.8.0'
 }
