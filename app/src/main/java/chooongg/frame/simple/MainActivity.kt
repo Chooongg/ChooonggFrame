@@ -7,7 +7,7 @@ import chooongg.frame.core.activity.ChooonggActivity
 import chooongg.frame.core.annotation.ContentLayout
 import chooongg.frame.core.annotation.TitleBar
 import chooongg.frame.http.TestAPI
-import chooongg.frame.http.request.HttpCallback
+import chooongg.frame.http.request.DefaultResponseCallback
 import chooongg.frame.http.request.http
 import chooongg.frame.log.L
 import chooongg.frame.utils.doOnClick
@@ -21,7 +21,8 @@ class MainActivity : ChooonggActivity() {
         chooonggToolbar?.setNavigationIcon(R.drawable.ic_arrow_back)
         lifecycleScope.http<String> {
             api { TestAPI.service().test() }
-            request(object : RequestCallback<String>() {
+            request(DefaultResponseCallback<String> {
+
 
             })
         }
@@ -33,9 +34,5 @@ class MainActivity : ChooonggActivity() {
             L.e(intent.toString())
             startActivity(intent)
         }
-    }
-
-    abstract class RequestCallback<RESPONSE> : HttpCallback<RESPONSE>() {
-
     }
 }

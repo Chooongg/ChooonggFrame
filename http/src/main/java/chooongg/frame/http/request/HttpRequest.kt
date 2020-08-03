@@ -34,7 +34,7 @@ class HttpRequest<RESPONSE>() {
         api = block
     }
 
-    suspend fun request(callback: HttpCallback<RESPONSE>) {
+    suspend fun request(callback: DefaultResponseCallback<RESPONSE>) {
         if (api == null) throw ChooonggFrameException("Request operation not implemented api method!")
         withMain { callback.onStart() }
         try {
@@ -53,6 +53,6 @@ class HttpRequest<RESPONSE>() {
         } catch (e: Throwable) {
             callback.configError(HttpException(e))
         }
-        withMain { callback.onEnd() }
+        withMain { callback.onEnd(true) }
     }
 }
