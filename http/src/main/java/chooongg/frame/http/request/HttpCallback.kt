@@ -4,6 +4,12 @@ import chooongg.frame.http.exception.HttpException
 
 open class HttpCallback<RESPONSE> {
 
+    private constructor()
+
+    constructor(block: (HttpCallback<RESPONSE>) -> Unit) {
+        block(HttpCallback())
+    }
+
     /**
      * 重写请从这里配置错误信息并进行分发
      */
