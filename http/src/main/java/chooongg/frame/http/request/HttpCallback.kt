@@ -6,7 +6,7 @@ open class HttpCallback<RESPONSE> {
 
     private constructor()
 
-    constructor(block: (HttpCallback<RESPONSE>) -> Unit) {
+    constructor(block: HttpCallback<RESPONSE>.() -> Unit) {
         block(HttpCallback())
     }
 
