@@ -2,7 +2,7 @@ package chooongg.frame.http.request
 
 import chooongg.frame.http.exception.HttpException
 
-abstract class HttpCallback<RESPONSE>() {
+open class HttpCallback<RESPONSE> {
 
     /**
      * 重写请从这里配置错误信息并进行分发
