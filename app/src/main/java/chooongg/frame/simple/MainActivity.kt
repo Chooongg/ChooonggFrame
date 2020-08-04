@@ -21,9 +21,13 @@ class MainActivity : ChooonggActivity() {
         chooonggToolbar?.setNavigationIcon(R.drawable.ic_arrow_back)
         lifecycleScope.http<String> {
             api { TestAPI.service().test() }
-            request(DefaultResponseCallback<String> {
+            request(DefaultResponseCallback {
+                start {
 
+                }
+                success {
 
+                }
             })
         }
     }
