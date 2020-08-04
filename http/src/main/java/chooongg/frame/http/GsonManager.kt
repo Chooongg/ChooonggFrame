@@ -7,3 +7,5 @@ object GsonManager {
     val gson by lazy { Gson() }
 
 }
+
+val gson get() = GsonManager.gson
