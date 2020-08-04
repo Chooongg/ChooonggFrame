@@ -3,8 +3,8 @@ package chooongg.frame.http
 import android.app.Application
 import android.util.Log
 import chooongg.frame.ChooonggFrame
-import chooongg.frame.log.LogLevel
 import chooongg.frame.throwable.ChooonggFrameException
+import chooongg.frame.utils.debug
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -13,9 +13,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.net.URL
 
 object ChooonggHttp {
-
-    var isEnableLog = BuildConfig.DEBUG
-    var logLevel = LogLevel.DEBUG
 
     private var isInitialized = false
 
@@ -48,7 +45,9 @@ object ChooonggHttp {
      */
     fun getOkHttpClient(config: (OkHttpClient.Builder.() -> Unit)?): OkHttpClient {
         val clientBuilder = OkHttpClient().newBuilder()
-        clientBuilder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+        debug {
+            clientBuilder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+        }
         config?.invoke(clientBuilder)
         return clientBuilder.build()
     }

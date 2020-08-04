@@ -11,7 +11,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
 
-class HttpException : Throwable {
+class HttpException : RuntimeException {
 
     object Converter {
         private var converter: HttpErrorConverter = DefaultErrorConverter()
