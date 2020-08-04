@@ -1,6 +1,5 @@
 package chooongg.frame.http
 
-import retrofit2.Response
 import java.net.URL
 
 interface TestAPI {
@@ -8,5 +7,5 @@ interface TestAPI {
         fun service() = ChooonggHttp.getAPI(TestAPI::class.java, URL(""))
     }
 
-    fun test(): Response<String>
+    suspend fun test(): String
 }
