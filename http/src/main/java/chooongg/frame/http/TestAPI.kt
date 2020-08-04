@@ -1,5 +1,6 @@
 package chooongg.frame.http
 
+import retrofit2.Call
 import java.net.URL
 
 interface TestAPI {
@@ -8,4 +9,6 @@ interface TestAPI {
     }
 
     suspend fun test(): String
+
+    suspend fun test2(): Call<String>
 }

@@ -8,10 +8,11 @@ import chooongg.frame.core.annotation.ContentLayout
 import chooongg.frame.core.annotation.TitleBar
 import chooongg.frame.http.TestAPI
 import chooongg.frame.http.request.DefaultResponseCallback
-import chooongg.frame.http.request.http
+import chooongg.frame.http.request.request
 import chooongg.frame.log.L
 import chooongg.frame.utils.doOnClick
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.launch
 
 @ContentLayout(R.layout.activity_main)
 @TitleBar(true, true, TitleBar.SURFACE)
@@ -19,15 +20,19 @@ class MainActivity : ChooonggActivity() {
 
     override fun initConfig(savedInstanceState: Bundle?) {
         chooonggToolbar?.setNavigationIcon(R.drawable.ic_arrow_back)
-        lifecycleScope.http<String> {
-            api { TestAPI.service().test() }
-            request(DefaultResponseCallback {
-                start {
+//        lifecycleScope.http<String> {
+//            api { TestAPI.service().test() }
+//            request(DefaultResponseCallback {
+//                start {
+//                }
+//                success {
+//
+//                }
+//            })
+//        }
+        lifecycleScope.launch {
+            TestAPI.service().test2().request(DefaultResponseCallback {
 
-                }
-                success {
-
-                }
             })
         }
     }

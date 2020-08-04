@@ -8,6 +8,9 @@ import chooongg.frame.utils.withMain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 fun <RESPONSE> CoroutineScope.http(block: suspend HttpRequest<RESPONSE>.() -> Unit): Job {
     return launch { withIO { block.invoke(HttpRequest()) } }
@@ -42,5 +45,28 @@ class HttpRequest<RESPONSE> internal constructor() {
             withMain { callback.configError(HttpException(e)) }
         }
         withMain { callback.onEnd(true) }
+    }
+}
+
+suspend fun <RESPONSE, DATA> Call<RESPONSE>.request(callback: ResponseCallback<RESPONSE, DATA>) {
+    withMain { callback.onStart() }
+    withIO {
+        enqueue(object : Callback<RESPONSE> {
+            override fun onResponse(call: Call<RESPONSE>, response: Response<RESPONSE>) {
+                suspend {
+                    if (response.isSuccessful) {
+                        withMain { callback.onResponse(response.body()) }
+                    } else {
+                        withMain { callback.configError(HttpException(response.code())) }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<RESPONSE>, t: Throwable) {
+                suspend {
+                    withMain { callback.configError(HttpException(t)) }
+                }
+            }
+        })
     }
 }
