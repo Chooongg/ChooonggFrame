@@ -33,11 +33,16 @@ suspend fun <RESPONSE, DATA> Call<RESPONSE?>.request(callback: ResponseCallback<
     withMain { callback.onStart() }
     var isSuccess: Boolean
     try {
-        val response = suspendCoroutine<RESPONSE?> {
+        val response = suspendCoroutine<RESPONSE> {
             enqueue(object : Callback<RESPONSE?> {
                 override fun onResponse(call: Call<RESPONSE?>, response: Response<RESPONSE?>) {
                     if (response.isSuccessful) {
-                        it.resume(response.body())
+                        val body = response.body()
+                        if (body == null) {
+                            it.resumeWithException(HttpException(HttpException.Type.EMPTY))
+                        } else {
+                            it.resume(body)
+                        }
                     } else {
                         it.resumeWithException(HttpException(response.code()))
                     }

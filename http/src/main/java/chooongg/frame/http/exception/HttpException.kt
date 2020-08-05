@@ -110,6 +110,7 @@ class HttpException : RuntimeException {
         NETWORK(-3), TIMEOUT(-4),
         PARSE(-5),
         SSL(-6),
+        EMPTY(-7),
         CONNECT(-8),
         HTTP400(400),
         HTTP401(401),
@@ -139,10 +140,11 @@ class HttpException : RuntimeException {
     class DefaultErrorConverter : HttpErrorConverter() {
         override fun convertRelease(type: Type) = when (type) {
             Type.CUSTOM -> "用户自定义错误"
-            Type.NETWORK -> "网络不可用"
+            Type.NETWORK -> "请检查网络连接"
             Type.TIMEOUT -> "请求连接超时"
-            Type.PARSE -> "请求实体解析失败"
-            Type.SSL -> "证书验证失败"
+            Type.PARSE -> "数据出现异常"
+            Type.SSL -> "验证失败"
+            Type.EMPTY -> "没有数据"
             Type.HTTP400, Type.HTTP401, Type.HTTP403, Type.HTTP404, Type.HTTP405, Type.HTTP406, Type.HTTP407, Type.HTTP408,
             Type.HTTP409, Type.HTTP410, Type.HTTP411, Type.HTTP412, Type.HTTP413, Type.HTTP414, Type.HTTP415, Type.HTTP416,
             Type.HTTP417 -> "请求出现错误"
@@ -157,6 +159,7 @@ class HttpException : RuntimeException {
             Type.TIMEOUT -> "请求连接超时"
             Type.PARSE -> "请求实体解析失败"
             Type.SSL -> "SSL证书验证失败"
+            Type.EMPTY -> "Body为空"
             Type.HTTP400 -> "400:服务器不理解请求的语法"
             Type.HTTP401 -> "401:请求要求身份验证"
             Type.HTTP403 -> "403:服务器拒绝请求"

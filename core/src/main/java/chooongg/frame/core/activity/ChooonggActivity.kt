@@ -15,10 +15,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import chooongg.frame.core.R
-import chooongg.frame.core.annotation.AutoHideKeyboard
-import chooongg.frame.core.annotation.TitleBar
-import chooongg.frame.core.annotation.TitleBarElevation
-import chooongg.frame.core.annotation.TranslucentStatusBar
+import chooongg.frame.core.annotation.*
 import chooongg.frame.core.interfaces.Init
 import chooongg.frame.core.manager.HideKeyboardManager
 import chooongg.frame.core.widget.ChooonggToolBar
@@ -186,6 +183,9 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
                         )
                     )
                     setSupportActionBar(toolbar)
+                    if (!javaClass.isAnnotationPresent(KeepNavigationButton::class.java)) {
+                        toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+                    }
                     chooonggToolbar = toolbar
                 } catch (e: Exception) {
                     Logger.e("configShowToolBar4Annotation() there is an exception", e)
