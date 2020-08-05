@@ -1,8 +1,9 @@
 package chooongg.frame.simple
 
 import android.os.Bundle
-import android.widget.EditText
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
+import chooongg.frame.ChooonggFrame
 import chooongg.frame.core.activity.ChooonggActivity
 import chooongg.frame.core.annotation.ContentLayout
 import chooongg.frame.core.annotation.TitleBar
@@ -19,17 +20,25 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : ChooonggActivity() {
 
     override fun initConfig(savedInstanceState: Bundle?) {
-        chooonggToolbar?.setNavigationIcon(R.drawable.ic_arrow_back)
-        val editText = EditText(context)
+
     }
 
     override fun initContent(savedInstanceState: Bundle?) {
         iv_image.doOnClick {
             lifecycleScope.launchIO {
+
                 TestAPI.service.sendSms("15533906327", 1)
                     .request(object : DefaultResponseCallback<APIResponse<Any>> {
-                        override suspend fun onSuccess(data: APIResponse<Any>?) {
+                        override fun onStart() {
+                            showLoading()
+                        }
 
+                        override fun onSuccess(data: APIResponse<Any>?) {
+                            Log.e(ChooonggFrame.TAG, "initConfig: 请求成功")
+                        }
+
+                        override fun onEnd(isSuccess: Boolean) {
+                            hideLoading()
                         }
                     })
             }

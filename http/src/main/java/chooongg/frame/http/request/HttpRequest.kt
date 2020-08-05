@@ -11,6 +11,7 @@ import kotlinx.coroutines.Job
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -20,7 +21,18 @@ fun CoroutineScope.http(
     block: suspend CoroutineScope.() -> Unit
 ): Job = launchIO(start, block)
 
+class TestCallback<RESPONSE, DATA> {
+    constructor()
+    constructor(co: CoroutineScope, block: suspend (Continuation<RESPONSE>) -> Unit) {
+        suspendCoroutine<RESPONSE> {
+            block.invoke(it)
+            Response<DATA>
+        }
+    }
+}
+
 suspend fun <RESPONSE, DATA> Call<RESPONSE?>.request(callback: ResponseCallback<RESPONSE, DATA>) {
+
     LoggerManager.changeFormatStrategy(
         LoggerManager.getDefaultPrettyFormatBuilder()
             .tag("ChooonggHttp")
@@ -31,7 +43,6 @@ suspend fun <RESPONSE, DATA> Call<RESPONSE?>.request(callback: ResponseCallback<
     Logger.d("RequestFrom")
     LoggerManager.changeDefault()
     withMain { callback.onStart() }
-    var isSuccess: Boolean
     try {
         val response = suspendCoroutine<RESPONSE> {
             enqueue(object : Callback<RESPONSE?> {
@@ -57,11 +68,14 @@ suspend fun <RESPONSE, DATA> Call<RESPONSE?>.request(callback: ResponseCallback<
                 }
             })
         }
-        withMain { callback.onResponse(response) }
-        isSuccess = true
+        withMain {
+            callback.onResponse(response)
+            callback.onEnd(true)
+        }
     } catch (e: HttpException) {
-        withMain { callback.configError(e) }
-        isSuccess = false
+        withMain {
+            callback.configError(e)
+            callback.onEnd(false)
+        }
     }
-    withMain { callback.onEnd(isSuccess) }
 }
