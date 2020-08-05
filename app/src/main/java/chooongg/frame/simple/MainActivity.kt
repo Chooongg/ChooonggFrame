@@ -3,7 +3,6 @@ package chooongg.frame.simple
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
-import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
 import chooongg.frame.core.activity.ChooonggActivity
 import chooongg.frame.core.annotation.ContentLayout
@@ -24,9 +23,6 @@ class MainActivity : ChooonggActivity() {
     override fun initConfig(savedInstanceState: Bundle?) {
         chooonggToolbar?.setNavigationIcon(R.drawable.ic_arrow_back)
         val editText = EditText(context)
-        editText.doOnTextChanged { text, start, before, count ->
-
-        }
     }
 
     override fun initContent(savedInstanceState: Bundle?) {

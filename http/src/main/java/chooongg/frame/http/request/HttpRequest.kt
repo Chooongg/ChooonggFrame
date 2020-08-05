@@ -1,8 +1,10 @@
 package chooongg.frame.http.request
 
 import chooongg.frame.http.exception.HttpException
+import chooongg.frame.manager.LoggerManager
 import chooongg.frame.utils.launchIO
 import chooongg.frame.utils.withMain
+import com.orhanobut.logger.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
@@ -19,8 +21,17 @@ fun CoroutineScope.http(
 ): Job = launchIO(start, block)
 
 suspend fun <RESPONSE, DATA> Call<RESPONSE?>.request(callback: ResponseCallback<RESPONSE, DATA>) {
+    LoggerManager.changeFormatStrategy(
+        LoggerManager.getDefaultPrettyFormatBuilder()
+            .tag("ChooonggHttp")
+            .methodCount(1)
+            .methodOffset(1)
+            .build()
+    )
+    Logger.d("RequestFrom")
+    LoggerManager.changeDefault()
     withMain { callback.onStart() }
-    var isSuccess = false
+    var isSuccess: Boolean
     try {
         val response = suspendCoroutine<RESPONSE?> {
             enqueue(object : Callback<RESPONSE?> {

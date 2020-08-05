@@ -1,7 +1,7 @@
 buildscript {
 
     ext.version_code = 1
-    ext.version_name = "0.0.6-alpha09"
+    ext.version_name = "0.0.6-alpha10"
 
     // 版本说明
     // alpha${num%2} 内测版本
@@ -33,6 +33,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
 }
 

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import chooongg.frame.core.activity.ChooonggActivity
 import chooongg.frame.core.interfaces.Init
-import chooongg.frame.log.L
+import com.orhanobut.logger.Logger
 
 abstract class ChooonggFragment : Fragment(), Init {
 
@@ -35,7 +35,7 @@ abstract class ChooonggFragment : Fragment(), Init {
                 isCreated = true
             }
         } catch (e: Exception) {
-            L.e("${javaClass.simpleName} setContentLayout operation there is an exception", e)
+            Logger.e("setContentView() there is an exception", e)
             null
         }
     }
@@ -48,13 +48,13 @@ abstract class ChooonggFragment : Fragment(), Init {
         try {
             initConfig(savedInstanceState)
         } catch (e: Exception) {
-            L.e("${javaClass.simpleName} initConfig() there is an exception", e)
+            Logger.e("initConfig() there is an exception", e)
             return
         }
         try {
             initContent(savedInstanceState)
         } catch (e: Exception) {
-            L.e("${javaClass.simpleName} initContent() there is an exception", e)
+            Logger.e("initContent() there is an exception", e)
             return
         }
     }

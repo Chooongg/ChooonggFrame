@@ -22,8 +22,8 @@ import chooongg.frame.core.annotation.TranslucentStatusBar
 import chooongg.frame.core.interfaces.Init
 import chooongg.frame.core.manager.HideKeyboardManager
 import chooongg.frame.core.widget.ChooonggToolBar
-import chooongg.frame.log.L
 import chooongg.frame.utils.*
+import com.orhanobut.logger.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -50,13 +50,13 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
             configShowToolBar4Annotation()
             if (chooonggToolbar != null) configToolBar(chooonggToolbar!!)
         } catch (e: Exception) {
-            L.e("${javaClass.simpleName} configToolBar operation there is an exception", e)
+            Logger.e("configToolBar() there is an exception", e)
         }
         configAutoHideKeyboard()
         try {
             setContentView(getContentLayout())
         } catch (e: Exception) {
-            L.e("${javaClass.simpleName} setContentLayout operation there is an exception", e)
+            Logger.e("setContentView() there is an exception", e)
             return
         }
         getWindowBackgroundRes().apply {
@@ -67,7 +67,7 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
             initConfig(savedInstanceState)
             isCreated = true
         } catch (e: Exception) {
-            L.e("${javaClass.simpleName} initConfig() there is an exception", e)
+            Logger.e("initConfig() there is an exception", e)
             return
         }
     }
@@ -78,7 +78,7 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
         try {
             initContent(savedInstanceState)
         } catch (e: Exception) {
-            L.e("${javaClass.simpleName} initContent() there is an exception", e)
+            Logger.e("initContent() there is an exception", e)
             return
         }
     }
@@ -188,10 +188,7 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
                     setSupportActionBar(toolbar)
                     chooonggToolbar = toolbar
                 } catch (e: Exception) {
-                    L.e(
-                        "${javaClass.simpleName} configShowToolBar4Annotation() there is an exception",
-                        e
-                    )
+                    Logger.e("configShowToolBar4Annotation() there is an exception", e)
                 }
             }
         }

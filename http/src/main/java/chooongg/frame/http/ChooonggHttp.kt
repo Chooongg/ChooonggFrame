@@ -5,8 +5,9 @@ import android.util.Log
 import chooongg.frame.ChooonggFrame
 import chooongg.frame.throwable.ChooonggFrameException
 import chooongg.frame.utils.debug
+import com.ihsanbal.logging.Level
+import com.ihsanbal.logging.LoggingInterceptor
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -46,7 +47,13 @@ object ChooonggHttp {
     fun getOkHttpClient(config: (OkHttpClient.Builder.() -> Unit)?): OkHttpClient {
         val clientBuilder = OkHttpClient().newBuilder()
         debug {
-            clientBuilder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            clientBuilder.addInterceptor(
+                LoggingInterceptor.Builder()
+                    .setLevel(Level.BODY)
+                    .log(Log.DEBUG)
+                    .tag("ChooonggHttp")
+                        .build()
+            )
         }
         config?.invoke(clientBuilder)
         return clientBuilder.build()

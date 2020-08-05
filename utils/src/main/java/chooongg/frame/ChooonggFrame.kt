@@ -1,9 +1,10 @@
 package chooongg.frame
 
 import android.app.Application
-import chooongg.frame.log.L
 import chooongg.frame.manager.ActivityTaskManager
 import chooongg.frame.manager.AppManager
+import chooongg.frame.manager.LoggerManager
+import com.orhanobut.logger.Logger
 import com.tencent.mmkv.MMKV
 
 object ChooonggFrame {
@@ -14,6 +15,7 @@ object ChooonggFrame {
         AppManager.initialize(application)
         application.registerActivityLifecycleCallbacks(ActivityTaskManager)
         MMKV.initialize(application)
+        LoggerManager.initialize()
         loadLibrary(application)
     }
 
@@ -32,7 +34,7 @@ object ChooonggFrame {
             val method = loadClass.getMethod("initialize", Application::class.java)
             method.invoke(loadClass, application)
         } catch (e: Exception) {
-            L.e("找不到该类")
+            Logger.e("找不到该类", e)
         }
     }
 
@@ -43,7 +45,7 @@ object ChooonggFrame {
             val method = loadClass.getDeclaredMethod("initialize", Application::class.java)
             method.invoke(loadClass, application)
         } catch (e: Exception) {
-            L.e("找不到该类")
+            Logger.e("找不到该类", e)
         }
     }
 }
