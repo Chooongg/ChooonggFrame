@@ -42,22 +42,7 @@ class MainActivity : ChooonggActivity() {
                         hideLoading()
                     }
                 }
-//                TestAPI.service.sendSms("15533906327", 1)
-//                    .request(object : DefaultResponseCallback<APIResponse<Any>> {
-//                        override fun onStart() {
-//                            showLoading()
-//                        }
-//
-//                        override fun onSuccess(data: APIResponse<Any>?) {
-//                            Log.e(ChooonggFrame.TAG, "initConfig: 请求成功")
-//                        }
-//
-//                        override fun onEnd(isSuccess: Boolean) {
-//                            hideLoading()
-//                        }
-//                    })
             }
-            launchIO.cancel()
         }
     }
 

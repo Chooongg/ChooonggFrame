@@ -1,4 +1,4 @@
-package chooongg.frame.http
+package chooongg.frame.http.manager
 
 import com.google.gson.Gson
 

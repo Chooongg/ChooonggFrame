@@ -3,6 +3,7 @@ package chooongg.frame.http
 import android.app.Application
 import android.util.Log
 import chooongg.frame.ChooonggFrame
+import chooongg.frame.http.manager.GsonManager
 import chooongg.frame.throwable.ChooonggFrameException
 import chooongg.frame.utils.debug
 import com.ihsanbal.logging.Level
