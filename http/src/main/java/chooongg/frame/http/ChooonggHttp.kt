@@ -47,16 +47,16 @@ object ChooonggHttp {
      */
     fun getOkHttpClient(config: (OkHttpClient.Builder.() -> Unit)?): OkHttpClient {
         val clientBuilder = OkHttpClient().newBuilder()
+        config?.invoke(clientBuilder)
         debug {
             clientBuilder.addInterceptor(
                 LoggingInterceptor.Builder()
                     .setLevel(Level.BODY)
                     .log(Log.DEBUG)
                     .tag("ChooonggHttp")
-                        .build()
+                    .build()
             )
         }
-        config?.invoke(clientBuilder)
         return clientBuilder.build()
     }
 }
