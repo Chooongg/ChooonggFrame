@@ -82,29 +82,36 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
 
     private var loadingTip: View? = null
 
+    @SuppressLint("InflateParams")
     fun showLoading(message: CharSequence? = null, isClickable: Boolean = false) {
         lifecycleScope.launch(Dispatchers.Main) {
             if (loadingTip != null) {
-                if (message.isNullOrEmpty()) {
-                    loadingTip!!.findViewById<TextView>(R.id.tv_message).gone()
-                } else {
-                    loadingTip!!.findViewById<TextView>(R.id.tv_message).text = message
+                loadingTip!!.findViewById<TextView>(R.id.tv_message).apply {
+                    if (message.isNullOrEmpty()) {
+                        gone()
+                    } else {
+                        text = message
+                        visible()
+                    }
                 }
                 return@launch
             }
-            loadingTip = layoutInflater.inflate(R.layout.view_loading, decorView)
+            loadingTip = layoutInflater.inflate(R.layout.view_loading, null)
             loadingTip!!.alpha = 0f
             loadingTip!!.layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT
             )
-            if (message.isNullOrEmpty()) {
-                loadingTip!!.findViewById<TextView>(R.id.tv_message).gone()
-            } else {
-                loadingTip!!.findViewById<TextView>(R.id.tv_message).text = message
+            loadingTip!!.findViewById<TextView>(R.id.tv_message).apply {
+                if (message.isNullOrEmpty()) {
+                    gone()
+                } else {
+                    text = message
+                    visible()
+                }
             }
             if (!isClickable) loadingTip!!.setOnClickListener { }
-
+            decorView.addView(loadingTip)
             loadingTip!!.animate().alpha(1f)
         }
     }

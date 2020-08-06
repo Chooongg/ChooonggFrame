@@ -3,79 +3,136 @@ package chooongg.frame.http.request
 import chooongg.frame.http.exception.HttpException
 import chooongg.frame.manager.LoggerManager
 import chooongg.frame.utils.launchIO
+import chooongg.frame.utils.launchMain
 import chooongg.frame.utils.withMain
 import com.orhanobut.logger.Logger
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
-import kotlin.coroutines.Continuation
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 fun CoroutineScope.http(
     start: CoroutineStart = CoroutineStart.DEFAULT,
     block: suspend CoroutineScope.() -> Unit
 ): Job = launchIO(start, block)
 
-class TestCallback<RESPONSE, DATA> {
-    constructor()
-    constructor(co: CoroutineScope, block: suspend (Continuation<RESPONSE>) -> Unit) {
-        suspendCoroutine<RESPONSE> {
-            block.invoke(it)
-            Response<DATA>
+fun <RESPONSE> CoroutineScope.retrofitDefault(dsl: DefaultRetrofitCoroutineDsl<RESPONSE>.() -> Unit) {
+    DefaultRetrofitCoroutineDsl<RESPONSE>().apply {
+        dsl()
+        request(this@retrofitDefault)
+    }
+}
+
+abstract class RetrofitCoroutineDsl<RESPONSE, DATA> {
+
+    lateinit var api: Call<RESPONSE?>
+
+    private var work:Deferred<Response<RESPONSE?>?>? = null
+
+    internal var onStart: (() -> Unit)? = null
+
+    internal var onResponse: ((RESPONSE) -> Unit)? = null
+
+    internal var onSuccess: ((DATA?) -> Unit)? = null
+
+    internal var onFailed: ((HttpException) -> Unit)? = null
+
+    internal var onEnd: ((Boolean) -> Unit)? = null
+        private set
+
+    init {
+        LoggerManager.changeFormatStrategy(
+            LoggerManager.getDefaultPrettyFormatBuilder()
+                .tag("ChooonggHttp")
+                .methodCount(1)
+                .methodOffset(3)
+                .build()
+        )
+        Logger.d("RequestFrom")
+        LoggerManager.changeDefault()
+    }
+
+    internal open fun clean() {
+        onStart = null
+        onResponse = null
+        onSuccess = null
+        onFailed = null
+        onEnd = null
+    }
+
+    fun onStart(block: () -> Unit) {
+        this.onStart = block
+    }
+
+    fun onResponse(block: (RESPONSE) -> Unit) {
+        this.onResponse = block
+    }
+
+    fun onSuccess(block: (data: DATA?) -> Unit) {
+        this.onSuccess = block
+    }
+
+    fun configFailed(error: Throwable) {
+        onFailed?.invoke(HttpException(error))
+    }
+
+    fun onFailed(block: (error: HttpException) -> Unit) {
+        this.onFailed = block
+    }
+
+    fun onEnd(block: (isSuccess: Boolean) -> Unit) {
+        this.onEnd = block
+    }
+
+    fun request(coroutineScope: CoroutineScope) {
+        coroutineScope.launchMain {
+            onStart?.invoke()
+            api.let {
+                work = async(Dispatchers.IO) {
+                    try {
+                        it.execute()
+                    } catch (e: Exception) {
+                        withMain { configFailed(e) }
+                        e.printStackTrace()
+                        null
+                    }
+                }
+                work?.invokeOnCompletion { _ ->
+                    if (work?.isCancelled == true) {
+                        it.cancel()
+                        clean()
+                    }
+                }
+                val response = work?.await()
+                response?.let {
+                    if (response.isSuccessful) {
+                        val body = response.body()
+                        if (body != null) {
+                            withMain {
+                                onResponse?.invoke(body)
+                                onEnd?.invoke(true)
+                            }
+                        } else {
+                            withMain {
+                                configFailed(HttpException(HttpException.Type.EMPTY))
+                                onEnd?.invoke(false)
+                            }
+                        }
+                    } else {
+                        withMain {
+                            configFailed(HttpException(response.code()))
+                            onEnd?.invoke(false)
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
-suspend fun <RESPONSE, DATA> Call<RESPONSE?>.request(callback: ResponseCallback<RESPONSE, DATA>) {
-
-    LoggerManager.changeFormatStrategy(
-        LoggerManager.getDefaultPrettyFormatBuilder()
-            .tag("ChooonggHttp")
-            .methodCount(1)
-            .methodOffset(1)
-            .build()
-    )
-    Logger.d("RequestFrom")
-    LoggerManager.changeDefault()
-    withMain { callback.onStart() }
-    try {
-        val response = suspendCoroutine<RESPONSE> {
-            enqueue(object : Callback<RESPONSE?> {
-                override fun onResponse(call: Call<RESPONSE?>, response: Response<RESPONSE?>) {
-                    try {
-                        if (response.isSuccessful) {
-                            val body = response.body()
-                            if (body == null) {
-                                it.resumeWithException(HttpException(HttpException.Type.EMPTY))
-                            } else {
-                                it.resume(body)
-                            }
-                        } else {
-                            it.resumeWithException(HttpException(response.code()))
-                        }
-                    } catch (e: Exception) {
-                        it.resumeWithException(e)
-                    }
-                }
-
-                override fun onFailure(call: Call<RESPONSE?>, t: Throwable) {
-                    it.resumeWithException(HttpException(t))
-                }
-            })
-        }
-        withMain {
-            callback.onResponse(response)
-            callback.onEnd(true)
-        }
-    } catch (e: HttpException) {
-        withMain {
-            callback.configError(e)
-            callback.onEnd(false)
+class DefaultRetrofitCoroutineDsl<RESPONSE> : RetrofitCoroutineDsl<RESPONSE, RESPONSE>() {
+    init {
+        onResponse = {
+            onSuccess?.invoke(it)
         }
     }
 }

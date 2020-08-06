@@ -11,6 +11,7 @@
         android:layout_gravity="center"
         android:layout_marginStart="@dimen/contentMiddle"
         android:layout_marginEnd="@dimen/contentMiddle"
+        android:animateLayoutChanges="true"
         android:background="@drawable/bg_toast"
         android:gravity="center"
         android:minWidth="@dimen/d80"
@@ -19,7 +20,7 @@
         android:padding="@dimen/contentMiddle">
 
         <com.google.android.material.progressindicator.ProgressIndicator
-            android:id="@+id/view_lottie"
+            android:id="@+id/progress_indicator"
             style="@style/Widget.MaterialComponents.ProgressIndicator.Circular.Indeterminate"
             android:layout_width="@dimen/d56"
             android:layout_height="@dimen/d56"

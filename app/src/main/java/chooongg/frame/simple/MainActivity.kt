@@ -7,15 +7,16 @@ import chooongg.frame.ChooonggFrame
 import chooongg.frame.core.activity.ChooonggActivity
 import chooongg.frame.core.annotation.ContentLayout
 import chooongg.frame.core.annotation.TitleBar
-import chooongg.frame.http.request.DefaultResponseCallback
-import chooongg.frame.http.request.request
+import chooongg.frame.core.annotation.WindowBackground
+import chooongg.frame.http.request.retrofitDefault
 import chooongg.frame.simple.api.APIResponse
 import chooongg.frame.simple.api.TestAPI
 import chooongg.frame.utils.doOnClick
-import chooongg.frame.utils.launchIO
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.launch
 
 @ContentLayout(R.layout.activity_main)
+@WindowBackground(R.color.colorBackground)
 @TitleBar(true, true, TitleBar.SURFACE)
 class MainActivity : ChooonggActivity() {
 
@@ -25,23 +26,38 @@ class MainActivity : ChooonggActivity() {
 
     override fun initContent(savedInstanceState: Bundle?) {
         iv_image.doOnClick {
-            lifecycleScope.launchIO {
-
-                TestAPI.service.sendSms("15533906327", 1)
-                    .request(object : DefaultResponseCallback<APIResponse<Any>> {
-                        override fun onStart() {
-                            showLoading()
-                        }
-
-                        override fun onSuccess(data: APIResponse<Any>?) {
-                            Log.e(ChooonggFrame.TAG, "initConfig: 请求成功")
-                        }
-
-                        override fun onEnd(isSuccess: Boolean) {
-                            hideLoading()
-                        }
-                    })
+            val launchIO = lifecycleScope.launch {
+                retrofitDefault<APIResponse<Any>> {
+                    api = TestAPI.service.sendSms("15533906327", 1)
+                    onStart {
+                        showLoading()
+                    }
+                    onSuccess {
+                        Log.e(ChooonggFrame.TAG, "initConfig: 请求成功")
+                    }
+                    onFailed {
+                        Log.e(ChooonggFrame.TAG, "initConfig: 请求失败")
+                    }
+                    onEnd {
+                        hideLoading()
+                    }
+                }
+//                TestAPI.service.sendSms("15533906327", 1)
+//                    .request(object : DefaultResponseCallback<APIResponse<Any>> {
+//                        override fun onStart() {
+//                            showLoading()
+//                        }
+//
+//                        override fun onSuccess(data: APIResponse<Any>?) {
+//                            Log.e(ChooonggFrame.TAG, "initConfig: 请求成功")
+//                        }
+//
+//                        override fun onEnd(isSuccess: Boolean) {
+//                            hideLoading()
+//                        }
+//                    })
             }
+            launchIO.cancel()
         }
     }
 

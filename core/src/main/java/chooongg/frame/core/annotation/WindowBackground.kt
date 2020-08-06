@@ -1,6 +1,6 @@
 package chooongg.frame.core.annotation
 
-import androidx.annotation.LayoutRes
+import androidx.annotation.DrawableRes
 
 @Target(AnnotationTarget.CLASS)
-annotation class WindowBackground(@LayoutRes val value: Int)
+annotation class WindowBackground(@DrawableRes val value: Int)
