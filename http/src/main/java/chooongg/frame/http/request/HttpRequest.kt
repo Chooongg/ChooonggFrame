@@ -26,7 +26,7 @@ abstract class RetrofitCoroutineDsl<RESPONSE, DATA> {
 
     lateinit var api: Call<RESPONSE?>
 
-    private var work:Deferred<Response<RESPONSE?>?>? = null
+    private var work: Deferred<Response<RESPONSE?>?>? = null
 
     internal var onStart: (() -> Unit)? = null
 
