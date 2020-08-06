@@ -15,10 +15,7 @@ object LoggerManager {
     fun logEnable(enable: Boolean) {
         if (enable != ChooonggMMKVConst.IsLogEnable.get) {
             ChooonggMMKVConst.IsLogEnable.put(enable)
-            Logger.clearLogAdapters()
-            Logger.addLogAdapter(object : AndroidLogAdapter() {
-                override fun isLoggable(priority: Int, tag: String?) = enable
-            })
+            changeLogAdapter()
         }
     }
 
