@@ -7,8 +7,19 @@
         <item name="colorSecondary">@color/colorSecondary</item>
         <item name="android:windowBackground">@color/colorBackground</item>
         <item name="actionBarSize">@dimen/d48</item>
+        <item name="android:textCursorDrawable">@drawable/edit_cursor</item>
+        <item name="android:windowAnimationStyle">@style/ChooonggWindowAnimation</item>
+        <item name="android:windowSoftInputMode">stateAlwaysHidden|adjustResize</item>
+        <item name="android:configChanges">keyboardHidden|orientation|screenSize</item>
         <item name="toolbarNavigationButtonStyle">@style/Widget.Chooongg.Toolbar.Button.Navigation
         </item>
+    </style>
+
+    <style name="ChooonggWindowAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/parallax_horizontal_open_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/parallax_horizontal_open_exit</item>
+        <item name="android:activityCloseEnterAnimation">@anim/parallax_horizontal_close_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/parallax_horizontal_close_exit</item>
     </style>
 
     <style name="Widget.Chooongg.Toolbar.Button.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">

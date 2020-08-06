@@ -2,14 +2,14 @@ package chooongg.frame.utils
 
 import android.app.Activity
 import android.view.View
-import android.view.ViewGroup
 import android.view.Window
 import android.widget.FrameLayout
+import androidx.appcompat.widget.ContentFrameLayout
 
 const val CLICK_INTERVAL = 800L
 
 inline val Activity.decorView: FrameLayout get() = window.decorView as FrameLayout
-inline val Activity.contentView: ViewGroup get() = findViewById(Window.ID_ANDROID_CONTENT)
+inline val Activity.contentView: ContentFrameLayout get() = findViewById(Window.ID_ANDROID_CONTENT)
 
 fun View.visible() = apply { if (visibility != View.VISIBLE) visibility = View.VISIBLE }
 fun View.inVisible() = apply { if (visibility != View.INVISIBLE) visibility = View.INVISIBLE }

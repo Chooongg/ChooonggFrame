@@ -57,8 +57,8 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
             return
         }
         getWindowBackgroundRes().apply {
-            if (this == null) window.setBackgroundDrawable(null)
-            else window.setBackgroundDrawableResource(this)
+            window.setBackgroundDrawable(null)
+            if (this != null) contentView.setBackgroundResource(this)
         }
         try {
             initConfig(savedInstanceState)
@@ -125,16 +125,9 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
             lifecycleScope.launch(Dispatchers.Main) {
                 if (loadingTip == null) return@launch
                 loadingTip!!.animate().alpha(0f).setListener(object : Animator.AnimatorListener {
-                    override fun onAnimationStart(animation: Animator?) {
-                    }
-
-                    override fun onAnimationRepeat(animation: Animator?) {
-                    }
-
-                    override fun onAnimationCancel(animation: Animator?) {
-                        decorView.removeView(loadingTip)
-                        loadingTip = null
-                    }
+                    override fun onAnimationStart(animation: Animator?) = Unit
+                    override fun onAnimationRepeat(animation: Animator?) = Unit
+                    override fun onAnimationCancel(animation: Animator?) = Unit
 
                     override fun onAnimationEnd(animation: Animator?) {
                         decorView.removeView(loadingTip)
