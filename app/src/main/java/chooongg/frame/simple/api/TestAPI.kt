@@ -10,7 +10,9 @@ import java.net.URL
 interface TestAPI {
     companion object {
         val service by lazy {
-            ChooonggHttp.getAPI(TestAPI::class.java, URL("https://api.yunxiaoqu.net/"))
+            ChooonggHttp.getAPI(TestAPI::class.java, URL("https://api.yunxiaoqu.net/")) {
+                addInterceptor(CommonParamsInterceptor())
+            }
         }
     }
 

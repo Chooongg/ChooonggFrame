@@ -64,15 +64,6 @@ abstract class RetrofitCoroutineDsl<RESPONSE, DATA> {
     }
 
     fun request(coroutineScope: CoroutineScope): Job {
-        LoggerManager.changeFormatStrategy(
-            LoggerManager.getDefaultPrettyFormatBuilder()
-                .tag("ChooonggHttp")
-                .methodCount(1)
-                .methodOffset(2)
-                .build()
-        )
-        Logger.d("RequestFrom: ${api.request().url}")
-        LoggerManager.changeDefault()
         return coroutineScope.launchMain {
             onStart?.invoke()
             val work = async(Dispatchers.IO) {

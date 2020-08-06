@@ -12,6 +12,8 @@ object LoggerManager {
         changeLogAdapter()
     }
 
+    fun isEnable() = ChooonggMMKVConst.IsLogEnable.get
+
     fun logEnable(enable: Boolean) {
         if (enable != ChooonggMMKVConst.IsLogEnable.get) {
             ChooonggMMKVConst.IsLogEnable.put(enable)
