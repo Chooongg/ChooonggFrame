@@ -42,3 +42,9 @@ object LoggerManager {
         override fun isLoggable(priority: Int, tag: String?) = ChooonggMMKVConst.IsLogEnable.get
     }
 }
+
+fun logD(message: String, vararg anys: Any?) = Logger.d(message, anys)
+
+fun logD(vararg anys: Any?) = Logger.d(anys)
+
+
