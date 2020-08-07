@@ -1,7 +1,7 @@
 buildscript {
 
     ext.version_code = 1
-    ext.version_name = "0.0.7-alpha06"
+    ext.version_name = "0.0.7-alpha07"
 
     // 版本说明
     // alpha${num%2} 内测版本
