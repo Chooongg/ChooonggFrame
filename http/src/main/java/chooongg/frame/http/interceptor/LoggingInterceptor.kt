@@ -161,11 +161,11 @@ class LoggingInterceptor : Interceptor {
             when {
                 msg.startsWith("{") -> {
                     val jsonObject = JSONObject(msg)
-                    BR + jsonObject.toString(JSON_INDENT)
+                    msg + BR + jsonObject.toString(JSON_INDENT)
                 }
                 msg.startsWith("[") -> {
                     val jsonArray = JSONArray(msg)
-                    BR + jsonArray.toString(JSON_INDENT)
+                    msg + BR + jsonArray.toString(JSON_INDENT)
                 }
                 else -> {
                     msg
