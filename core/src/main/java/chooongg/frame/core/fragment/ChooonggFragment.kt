@@ -13,7 +13,8 @@ abstract class ChooonggFragment : Fragment(), Init {
 
     inline val fragment get() = this
 
-    private var contentView: View? = null
+    protected lateinit var contentView: View
+        private set
 
     private var isCreated = false
 
@@ -30,6 +31,9 @@ abstract class ChooonggFragment : Fragment(), Init {
         savedInstanceState: Bundle?
     ): View? {
         return try {
+            if (getWindowBackgroundRes() != null) {
+                container?.setBackgroundResource(getWindowBackgroundRes()!!)
+            }
             inflater.inflate(getContentLayout(), container, false).apply {
                 contentView = this
                 isCreated = true
