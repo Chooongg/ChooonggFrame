@@ -2,7 +2,6 @@ package chooongg.frame.core.loadState
 
 import chooongg.frame.core.loadState.callback.Callback
 import chooongg.frame.core.loadState.target.ActivityTarget
-import chooongg.frame.core.loadState.target.FragmentTarget
 import chooongg.frame.core.loadState.target.ITarget
 import chooongg.frame.core.loadState.target.ViewTarget
 import kotlin.reflect.KClass
@@ -49,7 +48,6 @@ class LoadUtils {
         val callbacks = ArrayList<KClass<out Callback>>()
         val targetList = ArrayList<ITarget>().apply {
             add(ActivityTarget())
-            add(FragmentTarget())
             add(ViewTarget())
         }
         var defaultCallback: KClass<out Callback>? = null

@@ -23,6 +23,7 @@ class LoadService<T>(
                 loadLayout.setupCallback(callback)
             }
         }
+
         Handler().post {
             if (builder.defaultCallback != null) {
                 loadLayout.showCallback(builder.defaultCallback!!)

@@ -31,11 +31,11 @@ abstract class ChooonggFragment : Fragment(), Init {
         savedInstanceState: Bundle?
     ): View? {
         return try {
-            if (getWindowBackgroundRes() != null) {
-                container?.setBackgroundResource(getWindowBackgroundRes()!!)
-            }
             inflater.inflate(getContentLayout(), container, false).apply {
                 contentView = this
+                if (getWindowBackgroundRes() != null) {
+                    contentView.setBackgroundResource(getWindowBackgroundRes()!!)
+                }
                 isCreated = true
             }
         } catch (e: Exception) {

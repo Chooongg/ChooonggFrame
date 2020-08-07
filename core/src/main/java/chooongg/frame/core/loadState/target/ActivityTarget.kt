@@ -30,7 +30,7 @@ class ActivityTarget : ITarget {
         val oldLayoutParams = oldContent.layoutParams
         val loadLayout = LoadLayout(activity, onReloadListener)
         loadLayout.background = background
-        loadLayout.setupSuccessLayout(SuccessCallback(oldContent, activity, onReloadListener))
+        loadLayout.setupSuccessLayout(SuccessCallback(oldContent, activity, null))
         contentParent.addView(loadLayout, childIndex, oldLayoutParams)
         return loadLayout
     }
