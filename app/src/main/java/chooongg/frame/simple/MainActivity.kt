@@ -28,9 +28,10 @@ class MainActivity : ChooonggActivity() {
             override fun getItemCount() = 2
             override fun createFragment(position: Int) = TestFragment()
         }
-//        LoadUtils.getDefault().register(activity) {
-//
-//        }
+        val register = LoadUtils.getDefault().register(activity) {
+
+        }
+        register.showSuccess()
     }
 
     override fun initContent(savedInstanceState: Bundle?) {

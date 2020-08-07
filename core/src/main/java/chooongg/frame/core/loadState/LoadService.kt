@@ -1,6 +1,5 @@
 package chooongg.frame.core.loadState
 
-import android.os.Handler
 import androidx.annotation.DrawableRes
 import chooongg.frame.core.loadState.callback.Callback
 import chooongg.frame.core.loadState.callback.SuccessCallback
@@ -24,10 +23,8 @@ class LoadService<T>(
             }
         }
 
-        Handler().post {
-            if (builder.defaultCallback != null) {
-                loadLayout.showCallback(builder.defaultCallback!!)
-            }
+        if (builder.defaultCallback != null) {
+            loadLayout.showCallback(builder.defaultCallback!!)
         }
     }
 
