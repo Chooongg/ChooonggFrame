@@ -34,6 +34,7 @@ class HttpException : RuntimeException {
         }
     var code: String = ""
         private set
+
     private var messageCopy: String = ""
 
     constructor() : super() {
@@ -74,6 +75,8 @@ class HttpException : RuntimeException {
     constructor(e: Throwable) : super(e.toString(), e) {
         if (e is HttpException) {
             this.type = e.type
+            this.code = e.code
+            this.messageCopy = e.messageCopy
         } else {
             this.type = when {
                 !NetworkUtils.isNetworkConnected() -> Type.NETWORK
