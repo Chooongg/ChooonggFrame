@@ -4,13 +4,11 @@ import android.app.Application
 import android.util.Log
 import chooongg.frame.ChooonggFrame
 import chooongg.frame.entity.MemoryConstants
+import chooongg.frame.http.interceptor.LoggingInterceptor
 import chooongg.frame.http.manager.GsonManager
 import chooongg.frame.manager.APP
 import chooongg.frame.throwable.ChooonggFrameException
 import chooongg.frame.utils.NetworkUtils
-import chooongg.frame.utils.debug
-import com.ihsanbal.logging.Level
-import com.ihsanbal.logging.LoggingInterceptor
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.OkHttpClient
@@ -80,16 +78,7 @@ object ChooonggHttp {
             }
 
         config?.invoke(clientBuilder)
-        clientBuilder.addInterceptor(chooongg.frame.http.interceptor.LoggingInterceptor())
-//        debug {
-//            clientBuilder.addInterceptor(
-//                LoggingInterceptor.Builder()
-//                    .setLevel(Level.BASIC)
-//                    .log(Log.DEBUG)
-//                    .tag("ChooonggHttp")
-//                    .build()
-//            )
-//        }
+        clientBuilder.addInterceptor(LoggingInterceptor())
         return clientBuilder.build()
     }
 }
