@@ -1,10 +1,8 @@
 package chooongg.frame.http.request
 
 import chooongg.frame.http.exception.HttpException
-import chooongg.frame.manager.LoggerManager
 import chooongg.frame.utils.launchMain
 import chooongg.frame.utils.withMain
-import com.orhanobut.logger.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -88,8 +86,13 @@ abstract class RetrofitCoroutineDsl<RESPONSE, DATA> {
                     val body = response.body()
                     if (body != null) {
                         withMain {
-                            onResponse?.invoke(body)
-                            onEnd?.invoke(true)
+                            try {
+                                onResponse?.invoke(body)
+                                onEnd?.invoke(true)
+                            } catch (e: Exception) {
+                                configFailed(HttpException(e))
+                                onEnd?.invoke(false)
+                            }
                         }
                     } else {
                         withMain {
