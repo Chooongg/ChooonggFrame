@@ -47,13 +47,13 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
             configShowToolBar4Annotation()
             if (chooonggToolbar != null) configToolBar(chooonggToolbar!!)
         } catch (e: Exception) {
-            Logger.e(e, "${javaClass.simpleName} configToolBar() there is an exception\n")
+            Logger.e(e, "${javaClass.simpleName} configToolBar()")
         }
         configAutoHideKeyboard()
         try {
             setContentView(getContentLayout())
         } catch (e: Exception) {
-            Logger.e(e, "${javaClass.simpleName} setContentView() there is an exception\n")
+            Logger.e(e, "${javaClass.simpleName} setContentView()")
             return
         }
         getWindowBackgroundRes().apply {
@@ -64,7 +64,7 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
             initConfig(savedInstanceState)
             isCreated = true
         } catch (e: Exception) {
-            Logger.e(e, "${javaClass.simpleName} initConfig() there is an exception\n")
+            Logger.e(e, "${javaClass.simpleName} initConfig()")
             return
         }
     }
@@ -75,7 +75,7 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
         try {
             initContent(savedInstanceState)
         } catch (e: Exception) {
-            Logger.e(e, "${javaClass.simpleName} initContent() there is an exception\n")
+            Logger.e(e, "${javaClass.simpleName} initContent()")
             return
         }
     }
@@ -188,7 +188,7 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
                     }
                     chooonggToolbar = toolbar
                 } catch (e: Exception) {
-                    Logger.e(e, "configShowToolBar4Annotation() there is an exception\n")
+                    Logger.e(e, "configShowToolBar4Annotation()")
                 }
             }
         }

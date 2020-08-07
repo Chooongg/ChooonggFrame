@@ -38,6 +38,7 @@ object LoggerManager {
 
     fun getDefaultPrettyFormatBuilder() = PrettyFormatStrategy.newBuilder()
         .tag(ChooonggFrame.TAG)
+        .methodCount(1)
         .showThreadInfo(true)
 
     private fun getDefaultLogAdapter() = object : AndroidLogAdapter(formatStrategy) {
