@@ -35,7 +35,7 @@ abstract class ChooonggFragment : Fragment(), Init {
                 isCreated = true
             }
         } catch (e: Exception) {
-            Logger.e("${javaClass.simpleName} setContentView() there is an exception", e)
+            Logger.e(e, "${javaClass.simpleName} setContentView() there is an exception")
             null
         }
     }
@@ -48,13 +48,13 @@ abstract class ChooonggFragment : Fragment(), Init {
         try {
             initConfig(savedInstanceState)
         } catch (e: Exception) {
-            Logger.e("${javaClass.simpleName} initConfig() there is an exception", e)
+            Logger.e(e, "${javaClass.simpleName} initConfig() there is an exception")
             return
         }
         try {
             initContent(savedInstanceState)
         } catch (e: Exception) {
-            Logger.e("${javaClass.simpleName} initContent() there is an exception", e)
+            Logger.e(e, "${javaClass.simpleName} initContent() there is an exception")
             return
         }
     }
