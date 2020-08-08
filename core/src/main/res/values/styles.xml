@@ -18,12 +18,28 @@
     <style name="ChooonggWindowAnimation" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/parallax_horizontal_open_enter</item>
         <item name="android:activityOpenExitAnimation">@anim/parallax_horizontal_open_exit</item>
-        <item name="android:activityCloseEnterAnimation">@anim/parallax_horizontal_close_enter</item>
+        <item name="android:activityCloseEnterAnimation">@anim/parallax_horizontal_close_enter
+        </item>
         <item name="android:activityCloseExitAnimation">@anim/parallax_horizontal_close_exit</item>
     </style>
 
     <style name="Widget.Chooongg.Toolbar.Button.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="minWidth">?attr/actionBarSize</item>
+    </style>
+
+    <style name="ShapeableImageViewCorner">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">0dp</item>
+    </style>
+
+    <style name="ShapeableImageViewCorner.Circle" parent="ShapeableImageViewCorner">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="ShapeableImageViewCorner.Diamond" parent="ShapeableImageViewCorner">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">50%</item>
     </style>
 
 </resources>

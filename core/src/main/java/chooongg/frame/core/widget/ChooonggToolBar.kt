@@ -107,4 +107,8 @@ class ChooonggToolBar @JvmOverloads constructor(
             }
         }
     }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+    }
 }

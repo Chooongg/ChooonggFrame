@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,17 +19,17 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <chooongg.frame.core.widget.roundedImageView.RoundedImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_image"
         android:layout_width="@dimen/d72"
         android:layout_height="@dimen/d72"
-        android:src="@drawable/ic_launcher_background"
-        app:borderColor="@color/colorPrimary"
-        app:borderWidth="@dimen/d2"
-        app:isOval="true"
+        android:padding="@dimen/dividerSmall"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="@id/tv_test"
         app:layout_constraintStart_toStartOf="@id/tv_test"
-        app:layout_constraintTop_toBottomOf="@id/tv_test" />
+        app:layout_constraintTop_toBottomOf="@id/tv_test"
+        app:shapeAppearance="@style/ShapeableImageViewCorner.Circle"
+        app:srcCompat="@drawable/ic_launcher_background" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

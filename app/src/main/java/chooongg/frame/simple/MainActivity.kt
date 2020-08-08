@@ -10,12 +10,16 @@ import chooongg.frame.core.annotation.ContentLayout
 import chooongg.frame.core.annotation.TitleBar
 import chooongg.frame.core.annotation.WindowBackground
 import chooongg.frame.core.loadState.LoadUtils
+import chooongg.frame.core.utils.animatorCornerSize
 import chooongg.frame.http.request.retrofitDefault
 import chooongg.frame.simple.api.APIResponse
 import chooongg.frame.simple.api.TestAPI
 import chooongg.frame.utils.doOnClick
+import chooongg.frame.utils.withMain
+import coil.api.load
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @ContentLayout(R.layout.activity_main)
@@ -32,6 +36,15 @@ class MainActivity : ChooonggActivity() {
 
         }
         register.showSuccess()
+        lifecycleScope.launch {
+            withMain {
+                iv_image.load("https://img-blog.csdnimg.cn/20190821180619507.jpg") {
+                    crossfade(true)
+                    placeholder(R.drawable.ic_launcher_background)
+                    iv_image.animatorCornerSize(10f)
+                }
+            }
+        }
     }
 
     override fun initContent(savedInstanceState: Bundle?) {
