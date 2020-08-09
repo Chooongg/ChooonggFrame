@@ -37,7 +37,7 @@
     <color name="textSecondaryVariant">@color/colorSecondaryVariant</color>
     <color name="textVital">@color/colorOnSurface</color>
     <color name="textNormal">#4A4A4A</color>
-    <color name="textAuxiliary">#A4A4A4</color>
+    <color name="textAuxiliary">#666666</color>
     <color name="textButton">@color/colorOnPrimary</color>
     <color name="textGray">#999999</color>
 

@@ -58,6 +58,7 @@ dependencies {
     api 'androidx.navigation:navigation-ui-ktx:2.3.0'
     api 'androidx.viewpager2:viewpager2:1.1.0-alpha01'
     api 'androidx.constraintlayout:constraintlayout:2.0.0-rc1'
+    api 'com.github.rubensousa:gravitysnaphelper:2.2.1'
     api 'androidx.viewpager2:viewpager2:1.0.0'
     api 'com.airbnb.android:lottie:3.3.1'
 }

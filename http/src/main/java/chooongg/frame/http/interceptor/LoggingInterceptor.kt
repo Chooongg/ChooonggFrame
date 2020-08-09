@@ -78,7 +78,6 @@ class LoggingInterceptor : Interceptor {
             }
         })
 
-
         val startNs = System.nanoTime()
         // Response
         val response = chain.proceed(request)
