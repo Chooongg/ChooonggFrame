@@ -19,6 +19,7 @@ import chooongg.frame.core.annotation.*
 import chooongg.frame.core.interfaces.Init
 import chooongg.frame.core.manager.HideKeyboardManager
 import chooongg.frame.core.widget.ChooonggToolBar
+import chooongg.frame.permission.handlePermissionsResult
 import chooongg.frame.utils.*
 import com.orhanobut.logger.Logger
 import kotlinx.coroutines.Dispatchers
@@ -40,7 +41,7 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
     open fun configToolBar(toolBar: ChooonggToolBar) = Unit
 
     @Deprecated("使用使用init方法初始化")
-    override fun onCreate(savedInstanceState: Bundle?) {
+    final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         configTranslucentStatusBar4Annotation()
         try {
@@ -69,7 +70,7 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
         }
     }
 
-    override fun onPostCreate(savedInstanceState: Bundle?) {
+    final override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
         if (isCreated.not()) return
         try {
@@ -136,6 +137,15 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
                 })
             }
         }
+    }
+
+    final override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        handlePermissionsResult(requestCode, permissions, grantResults)
     }
 
     @Suppress("DEPRECATION")

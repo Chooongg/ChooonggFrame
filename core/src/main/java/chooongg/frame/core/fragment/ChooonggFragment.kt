@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import chooongg.frame.core.activity.ChooonggActivity
 import chooongg.frame.core.interfaces.Init
+import chooongg.frame.permission.handlePermissionsResult
 import com.orhanobut.logger.Logger
 
 abstract class ChooonggFragment : Fragment(), Init {
@@ -25,7 +26,7 @@ abstract class ChooonggFragment : Fragment(), Init {
 
     open fun onReselected() = Unit
 
-    override fun onCreateView(
+    final override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,7 +47,7 @@ abstract class ChooonggFragment : Fragment(), Init {
 
     override fun initContent(savedInstanceState: Bundle?) = Unit
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (isCreated.not()) return
         try {
@@ -84,5 +85,14 @@ abstract class ChooonggFragment : Fragment(), Init {
 
     fun hideLoading() {
         if (activity is ChooonggActivity) (activity as ChooonggActivity).hideLoading()
+    }
+
+    final override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        handlePermissionsResult(requestCode, permissions, grantResults)
     }
 }
