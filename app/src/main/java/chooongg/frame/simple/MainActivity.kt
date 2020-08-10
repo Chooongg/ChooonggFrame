@@ -11,8 +11,10 @@ import chooongg.frame.core.loadState.LoadUtils
 import chooongg.frame.utils.doOnClick
 import chooongg.frame.utils.withMain
 import coil.api.load
+import com.fondesa.recyclerviewdivider.addDivider
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.fragment_test.*
 import kotlinx.coroutines.launch
 
 @ContentLayout(R.layout.activity_main)
@@ -25,6 +27,7 @@ class MainActivity : ChooonggActivity() {
             override fun getItemCount() = 2
             override fun createFragment(position: Int) = TestFragment()
         }
+        recycler_view.addDivider()
         val register = LoadUtils.getDefault().register(activity) {
 
         }

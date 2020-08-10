@@ -4,7 +4,6 @@ import android.app.Application
 import chooongg.frame.manager.ActivityTaskManager
 import chooongg.frame.manager.AppManager
 import chooongg.frame.manager.LoggerManager
-import com.orhanobut.logger.Logger
 import com.tencent.mmkv.MMKV
 
 object ChooonggFrame {
@@ -34,7 +33,7 @@ object ChooonggFrame {
             val method = loadClass.getMethod("initialize", Application::class.java)
             method.invoke(loadClass, application)
         } catch (e: Exception) {
-            Logger.e("找不到该类", e)
+//            Logger.e("找不到该类", e)
         }
     }
 
@@ -45,7 +44,7 @@ object ChooonggFrame {
             val method = loadClass.getDeclaredMethod("initialize", Application::class.java)
             method.invoke(loadClass, application)
         } catch (e: Exception) {
-            Logger.e("找不到该类", e)
+//            Logger.e("找不到该类", e)
         }
     }
 }
