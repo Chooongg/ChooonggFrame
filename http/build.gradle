@@ -6,14 +6,15 @@ apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.Chooongg.Frame'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.0"
+
+    compileSdkVersion androidConfig.compileSdkVersion
+    buildToolsVersion androidConfig.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 30
-        versionCode version_code
-        versionName version_name
+        minSdkVersion androidConfig.minSdkVersion
+        targetSdkVersion androidConfig.targetSdkVersion
+        versionCode androidConfig.versionCode
+        versionName androidConfig.versionName
         consumerProguardFiles "consumer-rules.pro"
     }
 
