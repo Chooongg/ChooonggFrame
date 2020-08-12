@@ -19,6 +19,8 @@ abstract class RetrofitCoroutineDsl<RESPONSE, DATA> {
 
     lateinit var api: Call<RESPONSE?>
 
+    var body: RESPONSE? = null
+
     private var onStart: (() -> Unit)? = null
 
     protected var onResponse: ((RESPONSE) -> Unit)? = null
@@ -84,6 +86,7 @@ abstract class RetrofitCoroutineDsl<RESPONSE, DATA> {
             response?.let {
                 if (response.isSuccessful) {
                     val body = response.body()
+                    this@RetrofitCoroutineDsl.body = body
                     if (body != null) {
                         withMain {
                             try {
