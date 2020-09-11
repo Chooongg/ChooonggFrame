@@ -82,7 +82,7 @@ abstract class Callback : Serializable {
             addAnimation(AlphaAnimation(0f, 1f))
             addAnimation(
                 ScaleAnimation(
-                    0.0f, 1f, 0.0f, 1f,
+                    0.8f, 1f, 0.8f, 1f,
                     Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f
                 )
             )
