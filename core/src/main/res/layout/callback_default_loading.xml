@@ -9,6 +9,7 @@
         android:layout_width="@dimen/d56"
         android:layout_height="@dimen/d56"
         android:layout_gravity="center"
+        android:layout_margin="@dimen/d32"
         app:indicatorColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
