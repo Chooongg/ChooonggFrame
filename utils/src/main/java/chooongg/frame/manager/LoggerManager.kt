@@ -51,23 +51,23 @@ fun logTag(tag: String?) = Logger.t(tag)
 fun log(priority: Int, tag: String?, message: String?, throwable: Throwable?) =
     Logger.log(priority, tag, message, throwable)
 
-fun d(message: String, vararg args: Any?) = Logger.d(message, *args)
+fun logD(message: String, vararg args: Any?) = Logger.d(message, *args)
 
-fun d(`object`: Any?) = Logger.d(`object`)
+fun logD(`object`: Any?) = Logger.d(`object`)
 
-fun e(message: String, vararg args: Any?) = Logger.e(message, *args)
+fun logE(message: String, vararg args: Any?) = Logger.e(message, *args)
 
-fun e(throwable: Throwable?, message: String, vararg args: Any?) =
+fun logE(throwable: Throwable?, message: String, vararg args: Any?) =
     Logger.e(throwable, message, *args)
 
-fun i(message: String, vararg args: Any?) = Logger.i(message, *args)
+fun logI(message: String, vararg args: Any?) = Logger.i(message, *args)
 
-fun v(message: String, vararg args: Any?) = Logger.v(message, *args)
+fun logV(message: String, vararg args: Any?) = Logger.v(message, *args)
 
-fun w(message: String, vararg args: Any?) = Logger.w(message, *args)
+fun logW(message: String, vararg args: Any?) = Logger.w(message, *args)
 
-fun wtf(message: String, vararg args: Any?) = Logger.wtf(message, *args)
+fun logWtf(message: String, vararg args: Any?) = Logger.wtf(message, *args)
 
-fun json(json: String?) = Logger.json(json)
+fun logJson(json: String?) = Logger.json(json)
 
-fun xml(xml: String?) = Logger.xml(xml)
+fun logXml(xml: String?) = Logger.xml(xml)
