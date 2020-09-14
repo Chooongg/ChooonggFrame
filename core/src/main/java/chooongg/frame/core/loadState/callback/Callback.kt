@@ -36,6 +36,10 @@ abstract class Callback : Serializable {
 
     open fun onImageChange(): AppCompatImageView? = null
 
+    open fun setVerticalPercentage(percentage: Float) = Unit
+
+    open fun setHorizontalPercentage(percentage: Float) = Unit
+
     abstract fun onDetach(context: Context, view: View)
 
     constructor()

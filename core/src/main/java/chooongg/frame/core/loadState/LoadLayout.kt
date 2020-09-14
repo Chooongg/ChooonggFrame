@@ -23,6 +23,21 @@ class LoadLayout @JvmOverloads constructor(
     var currentCallback: KClass<out Callback>? = null
         private set
 
+    var verticalPercentage = 0.5f
+        internal set(value) {
+            if (field != value) {
+                field = value
+                callbacks[currentCallback]?.setVerticalPercentage(value)
+            }
+        }
+    var horizontalPercentage = 0.5f
+        internal set(value) {
+            if (field != value) {
+                field = value
+                callbacks[currentCallback]?.setHorizontalPercentage(value)
+            }
+        }
+
     fun setupSuccessLayout(callback: Callback) {
         addCallback(callback)
         val successView = callback.getRootView()
@@ -71,6 +86,8 @@ class LoadLayout @JvmOverloads constructor(
                     val rootView = callbacks[it.key]!!.getRootView()
                     addView(rootView)
                     callbacks[it.key]!!.onAttach(context, rootView)
+                    callbacks[it.key]!!.setVerticalPercentage(verticalPercentage)
+                    callbacks[it.key]!!.setHorizontalPercentage(horizontalPercentage)
                     if (callbacks[it.key]!!.isEnableAnimation()) {
                         rootView.startAnimation(callbacks[it.key]!!.getAnimation())
                     }
