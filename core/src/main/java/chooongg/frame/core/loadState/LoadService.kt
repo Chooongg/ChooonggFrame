@@ -1,6 +1,7 @@
 package chooongg.frame.core.loadState
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.FloatRange
 import chooongg.frame.core.loadState.callback.Callback
 import chooongg.frame.core.loadState.callback.SuccessCallback
 import kotlin.reflect.KClass
@@ -53,5 +54,13 @@ class LoadService<T>(
 
     fun setCallback(callback: KClass<out Callback>, transport: Transport) = apply {
         loadLayout.setCallback(callback, transport)
+    }
+
+    fun setVerticalPercentage(@FloatRange(from = 0.0, to = 1.0) percentage: Float) {
+        loadLayout.verticalPercentage = percentage
+    }
+
+    fun setHorizontalPercentage(@FloatRange(from = 0.0, to = 1.0) percentage: Float) {
+        loadLayout.horizontalPercentage = percentage
     }
 }

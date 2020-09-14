@@ -6,7 +6,7 @@ buildscript {
             minSdkVersion    : 21,
             targetSdkVersion : 30,
             versionCode      : 1,
-            versionName      : '0.0.8-alpha04'
+            versionName      : '0.0.8-alpha05'
             // 版本说明
             // alpha${num} 内测版本
             // beta${num}  公测版
@@ -18,7 +18,7 @@ buildscript {
             appcompatVersion: '1.3.0-alpha02'
     ]
 
-    ext.kotlin_version = "1.4.0"
+    ext.kotlin_version = "1.4.10"
 
     repositories {
         google()
