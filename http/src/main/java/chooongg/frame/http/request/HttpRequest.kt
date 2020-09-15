@@ -1,7 +1,7 @@
 package chooongg.frame.http.request
 
 import chooongg.frame.http.exception.HttpException
-import chooongg.frame.utils.launchMain
+import chooongg.frame.utils.launchIO
 import chooongg.frame.utils.withMain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -64,8 +64,8 @@ abstract class RetrofitCoroutineDsl<RESPONSE, DATA> {
     }
 
     fun request(coroutineScope: CoroutineScope): Job {
-        return coroutineScope.launchMain {
-            onStart?.invoke()
+        return coroutineScope.launchIO {
+            withMain { onStart?.invoke() }
             val work = async(Dispatchers.IO) {
                 try {
                     api.execute()
@@ -81,33 +81,39 @@ abstract class RetrofitCoroutineDsl<RESPONSE, DATA> {
                     clean()
                 }
             }
-
-            val response = work.await()
-            response?.let {
-                if (response.isSuccessful) {
-                    val body = response.body()
-                    this@RetrofitCoroutineDsl.body = body
-                    if (body != null) {
-                        withMain {
-                            try {
-                                onResponse?.invoke(body)
-                                onEnd?.invoke(true)
-                            } catch (e: Exception) {
-                                configFailed(HttpException(e))
+            try {
+                val response = work.await()
+                response?.let {
+                    if (response.isSuccessful) {
+                        val body = response.body()
+                        this@RetrofitCoroutineDsl.body = body
+                        if (body != null) {
+                            withMain {
+                                try {
+                                    onResponse?.invoke(body)
+                                    onEnd?.invoke(true)
+                                } catch (e: Exception) {
+                                    configFailed(e)
+                                    onEnd?.invoke(false)
+                                }
+                            }
+                        } else {
+                            withMain {
+                                configFailed(HttpException(HttpException.Type.EMPTY))
                                 onEnd?.invoke(false)
                             }
                         }
                     } else {
                         withMain {
-                            configFailed(HttpException(HttpException.Type.EMPTY))
+                            configFailed(HttpException(response.code()))
                             onEnd?.invoke(false)
                         }
                     }
-                } else {
-                    withMain {
-                        configFailed(HttpException(response.code()))
-                        onEnd?.invoke(false)
-                    }
+                }
+            } catch (e: Exception) {
+                withMain {
+                    configFailed(e)
+                    onEnd?.invoke(false)
                 }
             }
         }
