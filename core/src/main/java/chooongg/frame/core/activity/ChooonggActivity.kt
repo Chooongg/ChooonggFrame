@@ -51,8 +51,9 @@ abstract class ChooonggActivity : AppCompatActivity(), Init, Toolbar.OnMenuItemC
         try {
             configShowToolBar4Annotation()
             if (chooonggToolbar != null) {
-                configToolBar(chooonggToolbar!!)
+                chooonggToolbar!!.setNavigationOnClickListener { onBackPressed() }
                 chooonggToolbar!!.setOnMenuItemClickListener { onMenuItemClick(it) }
+                configToolBar(chooonggToolbar!!)
             }
         } catch (e: Exception) {
             Logger.e(e, "${javaClass.simpleName} configToolBar()")
