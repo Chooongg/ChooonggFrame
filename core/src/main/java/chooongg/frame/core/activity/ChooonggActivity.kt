@@ -6,11 +6,13 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toolbar
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -27,7 +29,7 @@ import kotlinx.coroutines.launch
 
 @AutoHideKeyboard
 @TitleBar(true, true, TitleBar.SURFACE)
-abstract class ChooonggActivity : AppCompatActivity(), Init {
+abstract class ChooonggActivity : AppCompatActivity(), Init, Toolbar.OnMenuItemClickListener {
 
     var isCreated = false
         private set
@@ -40,13 +42,18 @@ abstract class ChooonggActivity : AppCompatActivity(), Init {
 
     open fun configToolBar(toolBar: ChooonggToolBar) = Unit
 
+    override fun onMenuItemClick(item: MenuItem?) = true
+
     @Deprecated("使用使用init方法初始化")
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         configTranslucentStatusBar4Annotation()
         try {
             configShowToolBar4Annotation()
-            if (chooonggToolbar != null) configToolBar(chooonggToolbar!!)
+            if (chooonggToolbar != null) {
+                configToolBar(chooonggToolbar!!)
+                chooonggToolbar!!.setOnMenuItemClickListener { onMenuItemClick(it) }
+            }
         } catch (e: Exception) {
             Logger.e(e, "${javaClass.simpleName} configToolBar()")
         }
