@@ -6,7 +6,7 @@ buildscript {
             minSdkVersion    : 21,
             targetSdkVersion : 30,
             versionCode      : 1,
-            versionName      : '0.0.8-alpha11'
+            versionName      : '0.0.8-alpha12'
             // 版本说明
             // alpha${num} 内测版本
             // beta${num}  公测版

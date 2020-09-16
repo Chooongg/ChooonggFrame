@@ -13,6 +13,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toolbar
+import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -29,7 +30,7 @@ import kotlinx.coroutines.launch
 
 @AutoHideKeyboard
 @TitleBar(true, true, TitleBar.SURFACE)
-abstract class ChooonggActivity : AppCompatActivity(), Init, Toolbar.OnMenuItemClickListener {
+abstract class ChooonggActivity : AppCompatActivity, Init, Toolbar.OnMenuItemClickListener {
 
     var isCreated = false
         private set
@@ -40,9 +41,19 @@ abstract class ChooonggActivity : AppCompatActivity(), Init, Toolbar.OnMenuItemC
 
     var chooonggToolbar: ChooonggToolBar? = null
 
+    private val isConstructorSetContentView: Boolean
+
     open fun configToolBar(toolBar: ChooonggToolBar) = Unit
 
     override fun onMenuItemClick(item: MenuItem?) = true
+
+    constructor() : super() {
+        isConstructorSetContentView = false
+    }
+
+    constructor(@LayoutRes contentLayoutId: Int) : super(contentLayoutId) {
+        isConstructorSetContentView = true
+    }
 
     @Deprecated("使用使用init方法初始化")
     final override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,11 +70,13 @@ abstract class ChooonggActivity : AppCompatActivity(), Init, Toolbar.OnMenuItemC
             Logger.e(e, "${javaClass.simpleName} configToolBar()")
         }
         configAutoHideKeyboard()
-        try {
-            setContentView(getContentLayout())
-        } catch (e: Exception) {
-            Logger.e(e, "${javaClass.simpleName} setContentView()")
-            return
+        if (isConstructorSetContentView.not()) {
+            try {
+                setContentView(getContentLayout())
+            } catch (e: Exception) {
+                Logger.e(e, "${javaClass.simpleName} setContentView()")
+                return
+            }
         }
         getWindowBackgroundRes().apply {
             window.setBackgroundDrawable(null)

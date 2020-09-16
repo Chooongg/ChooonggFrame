@@ -4,15 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import chooongg.frame.core.activity.ChooonggActivity
 import chooongg.frame.core.interfaces.Init
 import chooongg.frame.permission.handlePermissionsResult
 import com.orhanobut.logger.Logger
 
-abstract class ChooonggFragment : Fragment(), Init {
+abstract class ChooonggFragment : Fragment, Init {
 
     inline val fragment get() = this
+
+    private val isConstructorSetContentView: Boolean
 
     protected lateinit var contentView: View
         private set
@@ -26,23 +29,33 @@ abstract class ChooonggFragment : Fragment(), Init {
 
     open fun onReselected() = Unit
 
+    constructor() : super() {
+        isConstructorSetContentView = false
+    }
+
+    constructor(@LayoutRes contentLayoutId: Int) : super(contentLayoutId) {
+        isConstructorSetContentView = true
+    }
+
     final override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return try {
-            inflater.inflate(getContentLayout(), container, false).apply {
-                contentView = this
-                if (getWindowBackgroundRes() != null) {
-                    contentView.setBackgroundResource(getWindowBackgroundRes()!!)
+        return if (isConstructorSetContentView.not()) {
+            try {
+                inflater.inflate(getContentLayout(), container, false).apply {
+                    contentView = this
+                    if (getWindowBackgroundRes() != null) {
+                        contentView.setBackgroundResource(getWindowBackgroundRes()!!)
+                    }
+                    isCreated = true
                 }
-                isCreated = true
+            } catch (e: Exception) {
+                Logger.e(e, "${javaClass.simpleName} setContentView()")
+                null
             }
-        } catch (e: Exception) {
-            Logger.e(e, "${javaClass.simpleName} setContentView()")
-            null
-        }
+        } else super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun initContent(savedInstanceState: Bundle?) = Unit
