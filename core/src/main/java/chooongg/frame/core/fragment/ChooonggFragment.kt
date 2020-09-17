@@ -17,9 +17,6 @@ abstract class ChooonggFragment : Fragment, Init {
 
     private val isConstructorSetContentView: Boolean
 
-    protected lateinit var contentView: View
-        private set
-
     private var isCreated = false
 
     var isFirstLoad = true
@@ -43,19 +40,19 @@ abstract class ChooonggFragment : Fragment, Init {
         savedInstanceState: Bundle?
     ): View? {
         return if (isConstructorSetContentView.not()) {
-            try {
-                inflater.inflate(getContentLayout(), container, false).apply {
-                    contentView = this
-                    if (getWindowBackgroundRes() != null) {
-                        contentView.setBackgroundResource(getWindowBackgroundRes()!!)
-                    }
-                    isCreated = true
+            inflater.inflate(getContentLayout(), container, false).apply {
+                isCreated = true
+                if (getWindowBackgroundRes() != null) {
+                    setBackgroundResource(getWindowBackgroundRes()!!)
                 }
-            } catch (e: Exception) {
-                Logger.e(e, "${javaClass.simpleName} setContentView()")
-                null
             }
-        } else super.onCreateView(inflater, container, savedInstanceState)
+        } else {
+            super.onCreateView(inflater, container, savedInstanceState).apply {
+                if (getWindowBackgroundRes() != null) {
+                    this?.setBackgroundResource(getWindowBackgroundRes()!!)
+                }
+            }
+        }
     }
 
     override fun initContent(savedInstanceState: Bundle?) = Unit

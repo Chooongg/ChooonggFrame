@@ -71,12 +71,7 @@ abstract class ChooonggActivity : AppCompatActivity, Init, Toolbar.OnMenuItemCli
         }
         configAutoHideKeyboard()
         if (isConstructorSetContentView.not()) {
-            try {
-                setContentView(getContentLayout())
-            } catch (e: Exception) {
-                Logger.e(e, "${javaClass.simpleName} setContentView()")
-                return
-            }
+            setContentView(getContentLayout())
         }
         getWindowBackgroundRes().apply {
             window.setBackgroundDrawable(null)
