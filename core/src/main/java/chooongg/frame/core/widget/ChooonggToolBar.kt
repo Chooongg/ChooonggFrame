@@ -26,6 +26,8 @@ class ChooonggToolBar @JvmOverloads constructor(
     private var mSubtitle: CharSequence? = null
     private var titleColor: ColorStateList? = null
     private var subTitleColor: ColorStateList? = null
+    private var titleTextAppearance: Int? = null
+    private var subTitleTextAppearance: Int? = null
 
     private var isCenter = false
 
@@ -47,6 +49,15 @@ class ChooonggToolBar @JvmOverloads constructor(
             customCenterView?.title_tv_subtitle?.setTextColor(subTitleColor)
             title = mTitle
             subtitle = mSubtitle
+            if (titleTextAppearance != null) {
+                customCenterView?.title_tv_title?.setTextAppearance(context, titleTextAppearance!!)
+            }
+            if (subTitleTextAppearance != null) {
+                customCenterView?.title_tv_subtitle?.setTextAppearance(
+                    context,
+                    subTitleTextAppearance!!
+                )
+            }
         } else {
             removeView(customCenterView)
         }
@@ -86,6 +97,16 @@ class ChooonggToolBar @JvmOverloads constructor(
     override fun setSubtitleTextColor(color: ColorStateList) {
         subTitleColor = color
         super.setSubtitleTextColor(color)
+    }
+
+    override fun setTitleTextAppearance(context: Context?, resId: Int) {
+        titleTextAppearance = resId
+        super.setTitleTextAppearance(context, resId)
+    }
+
+    override fun setSubtitleTextAppearance(context: Context?, resId: Int) {
+        subTitleTextAppearance = resId
+        super.setSubtitleTextAppearance(context, resId)
     }
 
     override fun setNavigationIcon(icon: Drawable?) {

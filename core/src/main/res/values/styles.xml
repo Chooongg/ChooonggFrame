@@ -11,8 +11,16 @@
         <item name="android:windowAnimationStyle">@style/ChooonggWindowAnimation</item>
         <item name="android:windowSoftInputMode">stateAlwaysHidden|adjustResize</item>
         <item name="android:configChanges">keyboardHidden|orientation|screenSize</item>
-        <item name="toolbarNavigationButtonStyle">@style/Widget.Chooongg.Toolbar.Button.Navigation
-        </item>
+    </style>
+
+    <style name="Theme.Chooongg.Toolbar.Primary" parent="Widget.MaterialComponents.Toolbar.Primary" />
+
+    <style name="Theme.Chooongg.Toolbar.Surface" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="actionMenuTextColor">@color/colorOnSurface</item>
+    </style>
+
+    <style name="Theme.Chooongg.Toolbar.PrimarySurface" parent="Widget.MaterialComponents.Toolbar.PrimarySurface">
+        <item name="actionMenuTextColor">@color/colorOnSurface</item>
     </style>
 
     <style name="ChooonggWindowAnimation" parent="@android:style/Animation.Activity">
@@ -21,10 +29,6 @@
         <item name="android:activityCloseEnterAnimation">@anim/parallax_horizontal_close_enter
         </item>
         <item name="android:activityCloseExitAnimation">@anim/parallax_horizontal_close_exit</item>
-    </style>
-
-    <style name="Widget.Chooongg.Toolbar.Button.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
-        <item name="minWidth">?attr/actionBarSize</item>
     </style>
 
     <style name="ShapeableImageViewCorner">

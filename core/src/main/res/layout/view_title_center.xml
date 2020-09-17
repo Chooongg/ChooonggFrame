@@ -17,9 +17,9 @@
         android:ellipsize="end"
         android:gravity="center"
         android:singleLine="true"
-        android:textSize="@dimen/textHeadline6"
+        android:textSize="18sp"
         android:visibility="gone"
-        app:autofit_minTextSize="@dimen/textSubtitle1"
+        app:autofit_minTextSize="@dimen/textBody2"
         app:autofit_sizeToFit="true" />
 
     <chooongg.frame.core.widget.autofit.AutofitTextView
