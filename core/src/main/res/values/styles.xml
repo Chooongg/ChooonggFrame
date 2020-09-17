@@ -16,10 +16,14 @@
     <style name="Theme.Chooongg.Toolbar.Primary" parent="Widget.MaterialComponents.Toolbar.Primary" />
 
     <style name="Theme.Chooongg.Toolbar.Surface" parent="Widget.MaterialComponents.Toolbar.Surface">
-        <item name="actionMenuTextColor">@color/colorOnSurface</item>
+        <item name="android:theme">@style/ThemeOverlay.Chooongg.Toolbar.Surface</item>
     </style>
 
     <style name="Theme.Chooongg.Toolbar.PrimarySurface" parent="Widget.MaterialComponents.Toolbar.PrimarySurface">
+        <item name="android:theme">@style/ThemeOverlay.Chooongg.Toolbar.Surface</item>
+    </style>
+
+    <style name="ThemeOverlay.Chooongg.Toolbar.Surface" parent="ThemeOverlay.MaterialComponents.Toolbar.Surface">
         <item name="actionMenuTextColor">@color/colorOnSurface</item>
     </style>
 
