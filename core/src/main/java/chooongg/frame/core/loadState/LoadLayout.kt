@@ -1,7 +1,6 @@
 package chooongg.frame.core.loadState
 
 import android.content.Context
-import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import chooongg.frame.core.loadState.callback.Callback
@@ -45,20 +44,6 @@ class LoadLayout : FrameLayout {
         onReloadListener: ((Class<out Callback>) -> Unit)?
     ) : super(context) {
         this.onReloadListener = onReloadListener
-    }
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        post {
-            if (childCount>0){
-                setupSuccessLayout(
-                    SuccessCallback(
-                        getChildAt(0),
-                        getChildAt(0).context,
-                        onReloadListener
-                    )
-                )
-            }
-        }
     }
 
     fun setupSuccessLayout(callback: Callback) {

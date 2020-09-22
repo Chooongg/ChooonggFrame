@@ -2,6 +2,7 @@ package chooongg.frame.core.loadState.target
 
 import android.view.View
 import android.view.ViewGroup
+import chooongg.frame.core.R
 import chooongg.frame.core.loadState.LoadLayout
 import chooongg.frame.core.loadState.callback.Callback
 import chooongg.frame.core.loadState.callback.SuccessCallback
@@ -35,6 +36,7 @@ class ViewTarget : ITarget {
                 onReloadListener
             )
         )
+        loadLayout.id = R.id.load_layout
         contentParent?.addView(loadLayout, childIndex, oldlayoutParams)
         return loadLayout
     }
