@@ -1,6 +1,7 @@
 package chooongg.frame.core.loadState
 
 import android.content.Context
+import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import chooongg.frame.core.loadState.callback.Callback
@@ -8,14 +9,13 @@ import chooongg.frame.core.loadState.callback.SuccessCallback
 import chooongg.frame.utils.isMainThread
 import kotlin.reflect.KClass
 
-class LoadLayout @JvmOverloads constructor(
-    context: Context,
-    private val onReloadListener: ((Class<out Callback>) -> Unit)? = null
-) : FrameLayout(context) {
+class LoadLayout : FrameLayout {
 
     companion object {
         private const val CALLBACK_CUSTOM_INDEX = 1
     }
+
+    private var onReloadListener: ((Class<out Callback>) -> Unit)? = null
 
     val callbacks = HashMap<KClass<out Callback>, Callback>()
     var preCallback: KClass<out Callback>? = null
@@ -37,6 +37,29 @@ class LoadLayout @JvmOverloads constructor(
                 callbacks[currentCallback]?.setHorizontalPercentage(value)
             }
         }
+
+    constructor(context: Context) : super(context)
+
+    constructor(
+        context: Context,
+        onReloadListener: ((Class<out Callback>) -> Unit)?
+    ) : super(context) {
+        this.onReloadListener = onReloadListener
+    }
+
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        post {
+            if (childCount>0){
+                setupSuccessLayout(
+                    SuccessCallback(
+                        getChildAt(0),
+                        getChildAt(0).context,
+                        onReloadListener
+                    )
+                )
+            }
+        }
+    }
 
     fun setupSuccessLayout(callback: Callback) {
         addCallback(callback)
