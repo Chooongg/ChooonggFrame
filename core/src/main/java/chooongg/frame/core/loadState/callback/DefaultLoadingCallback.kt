@@ -15,6 +15,7 @@ class DefaultLoadingCallback : Callback() {
     override fun onViewCreated(context: Context, view: View) = Unit
     override fun onAttach(context: Context, view: View) {
         progressIndicator = view.findViewById(R.id.progress_indicator)
+        progressIndicator.show()
     }
 
     override fun setVerticalPercentage(percentage: Float) {
@@ -29,5 +30,7 @@ class DefaultLoadingCallback : Callback() {
         }
     }
 
-    override fun onDetach(context: Context, view: View) = Unit
+    override fun onDetach(context: Context, view: View) {
+        progressIndicator.hide()
+    }
 }
