@@ -34,7 +34,7 @@ fun View.doOnLongClick(listener: ((View) -> Boolean)?) = setOnLongClickListener 
     return@setOnLongClickListener false
 }
 
-fun doOnClick(vararg views: View, listener: ((View) -> Boolean)?) {
+fun doOnClick(vararg views: View, listener: ((View) -> Unit)?) {
     views.forEach {
         it.setOnClickListener { view ->
             if (clickValid()) listener?.invoke(view)
