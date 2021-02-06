@@ -13,11 +13,14 @@ android {
         targetSdkVersion androidConfig.targetSdkVersion
         versionCode androidConfig.versionCode
         versionName androidConfig.versionName
+
+
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled androidConfig.releaseMinifyEnabled
+            shrinkResources androidConfig.releaseMinifyEnabled
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
